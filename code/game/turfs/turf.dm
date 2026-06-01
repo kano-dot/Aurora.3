@@ -110,6 +110,10 @@
 	var/tmp/is_outside = OUTSIDE_AREA
 	var/tmp/last_outside_check = OUTSIDE_UNCERTAIN
 
+	var/neighborlay
+	var/neighborlay_list = list()
+	var/neighborlay_override
+
 // Parent code is duplicated in here instead of ..() for performance reasons.
 // There's ALSO a copy of this in mine_turfs.dm!
 /turf/Initialize(mapload, ...)
@@ -190,6 +194,54 @@
 	underlay_appearance.appearance = src
 	underlay_appearance.dir = adjacency_dir
 	return TRUE
+
+/turf/proc/alternative_smooth(adjacencies)
+	var/list/New
+	var/holder
+
+	for(var/A in neighborlay_list)
+		CutOverlays("[A]")
+		neighborlay_list -= A
+
+	var/turf/T
+	var/state
+
+	if(!(adjacencies & N_NORTH))
+		T = get_step(src, NORTH)
+		if(isturf(T))
+			state = neighborlay_override || T.neighborlay
+			if(state)
+				holder = "[state]-n"
+				LAZYADD(New, holder); LAZYADD(neighborlay_list, holder)
+
+	if(!(adjacencies & N_SOUTH))
+		T = get_step(src, SOUTH)
+		if(isturf(T))
+			state = neighborlay_override || T.neighborlay
+			if(state)
+				holder = "[state]-s"
+				LAZYADD(New, holder); LAZYADD(neighborlay_list, holder)
+
+	if(!(adjacencies & N_WEST))
+		T = get_step(src, WEST)
+		if(isturf(T))
+			state = neighborlay_override || T.neighborlay
+			if(state)
+				holder = "[state]-w"
+				LAZYADD(New, holder); LAZYADD(neighborlay_list, holder)
+
+	if(!(adjacencies & N_EAST))
+		T = get_step(src, EAST)
+		if(isturf(T))
+			state = neighborlay_override || T.neighborlay
+			if(state)
+				holder = "[state]-e"
+				LAZYADD(New, holder); LAZYADD(neighborlay_list, holder)
+
+	if(New)
+		AddOverlays(New)
+
+	return New
 
 /// Handles starlight for turfs for whose area's needs_starlight var is set to true.
 /// Logic unique to space turfs is set within a child proc of this!

@@ -14,3 +14,9 @@
 	broken_overlay = "tiled"
 	burned_overlay = "tiled"
 	initial_flooring = /singleton/flooring/concrete/square
+
+/turf/simulated/floor/exoplanet/sidewalk/flat
+	name = "flat paved tiles"
+	icon = 'icons/turf/flooring/urban_turfs.dmi'
+	icon_state = "brick-paver"
+	has_resources = FALSE

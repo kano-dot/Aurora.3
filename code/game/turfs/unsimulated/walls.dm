@@ -102,3 +102,13 @@
 		/obj/machinery/door/airlock
 	)
 
+/turf/unsimulated/wall/composite_stone
+	name = "composite stone wall"
+	desc = "Effectively impervious to conventional methods of destruction."
+	icon = 'icons/turf/smooth/composite_stone.dmi'
+	icon_state = "map-wall"
+	color = COLOR_CONCRETE
+	smoothing_flags = SMOOTH_MORE
+	canSmoothWith = list(
+		/turf/unsimulated/wall/composite_stone
+	)

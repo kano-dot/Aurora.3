@@ -748,6 +748,7 @@ GLOBAL_LIST_INIT(asteroid_floor_smooth, list(
 
 // Copypaste parent for performance.
 /turf/simulated/floor/exoplanet/asteroid/Initialize(mapload)
+	. = ..()
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
@@ -774,8 +775,6 @@ GLOBAL_LIST_INIT(asteroid_floor_smooth, list(
 	var/area/current_area = loc
 	if(current_area?.lighting_effect)
 		overlays += current_area.lighting_effect
-
-	return INITIALIZE_HINT_NORMAL
 
 /turf/simulated/floor/exoplanet/asteroid/ex_act(severity)
 	switch(severity)

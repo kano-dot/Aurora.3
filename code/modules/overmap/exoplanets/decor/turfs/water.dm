@@ -188,3 +188,80 @@
 		var/turf/tile = loc
 		tile.clean_blood()
 		tile.remove_cleanables()
+
+///////////// OVERLAY EFFECTS /////////////
+/obj/effect/overlay/water
+	icon = 'icons/turf/newwater.dmi'
+	icon_state = "bottom"
+	density = FALSE
+	mouse_opacity = FALSE
+	layer = BELOW_BELOW_OBJ_LAYER
+	anchored = TRUE
+
+/obj/effect/overlay/water/top
+	icon_state = "top"
+
+/turf/simulated/floor/exoplanet/water/smooth
+	gender = PLURAL
+	name = "water"
+	icon = 'icons/turf/newwater.dmi'
+	icon_state = "together"
+	deep = FALSE
+	var/base_turf_icon = "together"
+	var/obj/effect/overlay/water/water_bottom_overlay
+	var/obj/effect/overlay/water/top/water_top_overlay
+	smoothing_flags = SMOOTH_MORE
+	//landsound = 'sound/foley/jumpland/waterland.wav'
+	neighborlay_override = "edge"
+	var/water_color = "#6a9295"
+	var/water_level = 2
+
+/turf/simulated/floor/exoplanet/water/smooth/Initialize()
+	.  = ..()
+	icon_state = base_turf_icon
+	water_bottom_overlay = new(src)
+	water_top_overlay = new(src)
+	update_icon()
+
+/turf/simulated/floor/exoplanet/water/smooth/update_icon()
+	if(water_bottom_overlay)
+		water_bottom_overlay.color = water_color
+		water_bottom_overlay.icon_state = "bottom[water_level]"
+	if(water_top_overlay)
+		water_top_overlay.color = water_color
+		water_top_overlay.icon_state = "top[water_level]"
+
+/turf/simulated/floor/exoplanet/water/smooth/cardinal_smooth(adjacencies)
+	alternative_smooth(adjacencies)
+
+/turf/simulated/floor/exoplanet/water/smooth/Entered(atom/movable/AM, atom/oldLoc)
+	. = ..()
+	if(locate(/obj/structure/lattice) in get_turf(src))
+		return
+
+	if(isliving(AM) && !AM.throwing)
+		if(water_bottom_overlay)
+			/*if(istype(oldLoc, type) && (get_dir(src, oldLoc) != SOUTH))
+				water_bottom_overlay.layer = ABOVE_HUMAN_LAYER
+				water_bottom_overlay.plane = ABOVE_GAME_PLANE // try lower
+			else*/
+			if(AM.loc == src)
+				water_bottom_overlay.layer = ABOVE_HUMAN_LAYER
+				water_bottom_overlay.plane = ABOVE_GAME_PLANE // try lower
+
+/turf/simulated/floor/exoplanet/water/smooth/Exited(atom/movable/AM, atom/newloc)
+	. = ..()
+	if(isliving(AM) && !AM.throwing)
+		if(water_bottom_overlay)
+				/*if((get_dir(src, newloc) == SOUTH))
+					water_bottom_overlay.layer = BELOW_LYING_MOB_LAYER
+					water_bottom_overlay.plane = GAME_PLANE
+				else*/
+			if(!locate(/mob/living) in src)
+				water_bottom_overlay.layer = BELOW_BELOW_OBJ_LAYER
+				water_bottom_overlay.plane = GAME_PLANE
+
+/turf/simulated/floor/exoplanet/water/smooth/swamp
+	name = "murk"
+	desc = "Weeds and algae cover the surface of the water."
+	water_color = "#705a43"

@@ -147,6 +147,9 @@
 	else
 		..()
 
+/obj/structure/lattice/catwalk/indoor/above_water
+	layer = BELOW_OBJ_LAYER
+
 /obj/structure/lattice/catwalk/hoist_act(turf/dest)
 	for (var/A in loc)
 		var/atom/movable/AM = A
@@ -242,6 +245,9 @@
 	icon_state = "city_grate"
 	return_amount = 1
 	smoothing_flags = null
+
+/obj/structure/lattice/catwalk/indoor/urban/above_water
+	layer = BELOW_OBJ_LAYER
 
 /obj/structure/lattice/catwalk/indoor/tatami
 	name = "tatami spread"
