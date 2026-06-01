@@ -147,7 +147,7 @@ var/list/channel_to_radio_key = new
 
 /mob/living/proc/handle_message_mode(message_mode, message, verb, speaking, used_radios, alt_name, whisper)
 	if(message_mode == "intercom")
-		for(var/obj/item/device/radio/intercom/I in view(1, src))
+		for(var/obj/item/radio/intercom/I in view(1, src))
 			used_radios += I
 			I.talk_into(src, message, verb, speaking)
 
@@ -320,7 +320,7 @@ var/list/channel_to_radio_key = new
 		if(!speaking || !(speaking.flags & PRESSUREPROOF))
 			//make sure the air can transmit speech - speaker's side
 			var/datum/gas_mixture/environment = T.return_air()
-			var/pressure = (environment)? environment.return_pressure() : 0
+			var/pressure = SAFE_XGM_PRESSURE(environment)
 			if(pressure < SOUND_MINIMUM_PRESSURE)
 				message_range = 1
 

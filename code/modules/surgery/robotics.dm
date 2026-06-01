@@ -5,6 +5,7 @@
 
 /singleton/surgery_step/robotics
 	can_infect = FALSE
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_TRAINED)
 
 /singleton/surgery_step/robotics/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
@@ -25,7 +26,7 @@
 /singleton/surgery_step/robotics/unscrew_hatch
 	name = "Unscrew Hatch"
 	allowed_tools = list(
-		SCREWDRIVER = 100,
+		TOOL_SCREWDRIVER = 100,
 		/obj/item/coin = 50,
 		/obj/item/material/kitchen/utensil/knife = 50
 	)
@@ -34,6 +35,8 @@
 	max_duration = 70
 
 	requires_surgery_compatibility = FALSE
+	// Basic surgery any novice roboticist can do
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_FAMILIAR)
 
 /singleton/surgery_step/robotics/unscrew_hatch/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
@@ -67,7 +70,7 @@
 /singleton/surgery_step/robotics/screw_hatch
 	name = "Screw Hatch"
 	allowed_tools = list(
-		SCREWDRIVER = 100,
+		TOOL_SCREWDRIVER = 100,
 		/obj/item/coin = 50,
 		/obj/item/material/kitchen/utensil/knife = 50
 	)
@@ -76,6 +79,8 @@
 	max_duration = 70
 
 	requires_surgery_compatibility = FALSE
+	// Basic surgery any novice roboticist can do
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_FAMILIAR)
 
 /singleton/surgery_step/robotics/screw_hatch/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
@@ -109,13 +114,15 @@
 /singleton/surgery_step/robotics/open_hatch
 	name = "Open Hatch"
 	allowed_tools = list(
-		/obj/item/surgery/retractor = 100,
-		CROWBAR = 100,
+		TOOL_RETRACTOR = 100,
+		TOOL_CROWBAR = 100,
 		/obj/item/material/kitchen/utensil = 50
 	)
 
 	min_duration = 20
 	max_duration = 30
+	// Basic surgery any novice roboticist can do
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_TRAINED)
 
 /singleton/surgery_step/robotics/open_hatch/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
@@ -146,13 +153,15 @@
 /singleton/surgery_step/robotics/close_hatch
 	name = "Close Hatch"
 	allowed_tools = list(
-		/obj/item/surgery/retractor = 100,
-		CROWBAR = 100,
+		TOOL_RETRACTOR = 100,
+		TOOL_CROWBAR = 100,
 		/obj/item/material/kitchen/utensil = 50
 	)
 
 	min_duration = 50
 	max_duration = 80
+	// Basic surgery any novice roboticist can do
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_TRAINED)
 
 /singleton/surgery_step/robotics/close_hatch/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
@@ -187,19 +196,21 @@
 /singleton/surgery_step/robotics/repair_brute
 	name = "Repair Damage"
 	allowed_tools = list(
-		/obj/item/weldingtool = 100,
+		TOOL_WELDER = 100,
 		/obj/item/gun/energy/plasmacutter = 50
 	)
 
 	min_duration = 30
 	max_duration = 40
+	// Basic surgery any novice roboticist can do
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_FAMILIAR)
 
 /singleton/surgery_step/robotics/repair_brute/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
 		return FALSE
 
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
-	if(tool.iswelder())
+	if(tool.tool_behaviour == TOOL_WELDER)
 		var/obj/item/weldingtool/welder = tool
 		if(!welder.isOn() || welder.get_fuel() < 2)
 			return FALSE
@@ -212,7 +223,7 @@
 	..()
 
 /singleton/surgery_step/robotics/repair_brute/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(tool.iswelder())
+	if(tool.tool_behaviour == TOOL_WELDER)
 		var/obj/item/weldingtool/welder = tool
 		if(!welder.isOn() && !welder.use(2, user))
 			user.visible_message(SPAN_WARNING("[user]'s [tool] shut off before the procedure was finished."), \
@@ -232,12 +243,13 @@
 /singleton/surgery_step/robotics/repair_burn
 	name = "Repair Burns"
 	allowed_tools = list(
-		/obj/item/stack/cable_coil = 100,
-		/obj/item/stack/cable_coil/cyborg = 100
+		TOOL_CABLECOIL = 100
 	)
 
 	min_duration = 30
 	max_duration = 40
+	// Basic surgery any novice roboticist can do
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_FAMILIAR)
 
 /singleton/surgery_step/robotics/repair_burn/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
@@ -276,11 +288,12 @@
 /singleton/surgery_step/robotics/detach_organ_robotic
 	name = "Detach Robotic Organ"
 	allowed_tools = list(
-	/obj/item/device/multitool = 100
+	TOOL_MULTITOOL = 100
 	)
 
 	min_duration = 70
 	max_duration = 90
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_TRAINED)
 
 /singleton/surgery_step/robotics/detach_organ_robotic/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
@@ -326,13 +339,14 @@
 /singleton/surgery_step/robotics/attach_organ_robotic
 	name = "Attach Robotic Organ"
 	allowed_tools = list(
-		SCREWDRIVER = 100
+		TOOL_SCREWDRIVER = 100
 	)
 
 	min_duration = 80
 	max_duration = 100
 
 	requires_surgery_compatibility = FALSE
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_TRAINED)
 
 /singleton/surgery_step/robotics/attach_organ_robotic/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
@@ -377,11 +391,12 @@
 /singleton/surgery_step/robotics/install_mmi
 	name = "Install MMI"
 	allowed_tools = list(
-	/obj/item/device/mmi = 100
+	/obj/item/mmi = 100
 	)
 
 	min_duration = 40
 	max_duration = 60
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_TRAINED)
 
 /singleton/surgery_step/robotics/install_mmi/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
@@ -390,7 +405,7 @@
 	if(target_zone != BP_HEAD)
 		return FALSE
 
-	var/obj/item/device/mmi/M = tool
+	var/obj/item/mmi/M = tool
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	if(!(affected && affected.open == ORGAN_ENCASED_RETRACTED))
 		return FALSE
@@ -435,7 +450,7 @@
 	user.visible_message("<b>[user]</b> has installed \the [tool] into [target]'s [affected.name].", \
 		SPAN_NOTICE("You have installed \the [tool] into [target]'s [affected.name]."))
 
-	var/obj/item/device/mmi/M = tool
+	var/obj/item/mmi/M = tool
 	var/obj/item/organ/internal/machine/posibrain/holder = new(target, 1)
 	target.internal_organs_by_name[BP_BRAIN] = holder
 	user.drop_from_inventory(tool,holder)
@@ -452,12 +467,13 @@
 /singleton/surgery_step/internal/fix_internal_wiring
 	name = "Repair Internal Wiring"
 	allowed_tools = list(
-		/obj/item/stack/cable_coil = 100,
-		/obj/item/stack/cable_coil/cyborg = 100
+		TOOL_CABLECOIL = 100
 	)
 
 	min_duration = 50
 	max_duration = 70
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_TRAINED)
+	skill_diff_fail_modifier = SURGERY_DIFFICULTY_MEDIUM
 
 /singleton/surgery_step/internal/fix_internal_wiring/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
@@ -502,11 +518,13 @@
 /singleton/surgery_step/internal/fix_internal_electronics
 	name = "Repair Internal Electronics"
 	allowed_tools = list(
-		/obj/item/device/multitool = 100,
+		TOOL_MULTITOOL = 100,
 	)
 
 	min_duration = 100
 	max_duration = 200
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_TRAINED)
+	skill_diff_fail_modifier = SURGERY_DIFFICULTY_HARD
 
 /singleton/surgery_step/internal/fix_internal_electronics/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
@@ -547,6 +565,8 @@
 
 	min_duration = 75
 	max_duration = 120
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_TRAINED)
+	skill_diff_fail_modifier = SURGERY_DIFFICULTY_HARD
 
 /singleton/surgery_step/internal/fix_internal_plating/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
@@ -598,6 +618,8 @@
 
 	min_duration = 100
 	max_duration = 150
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_TRAINED)
+	skill_diff_fail_modifier = SURGERY_DIFFICULTY_HARD
 
 /singleton/surgery_step/internal/replace_internal_plating/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
@@ -643,6 +665,8 @@
 	max_duration = 200
 
 	var/fast_repair = FALSE
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_TRAINED)
+	skill_diff_fail_modifier = SURGERY_DIFFICULTY_MEDIUM
 
 /singleton/surgery_step/internal/replace_external_plating/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
@@ -683,12 +707,15 @@
 
 	min_duration = 100
 	max_duration = 150
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_FAMILIAR)
+	skill_diff_fail_modifier = SURGERY_DIFFICULTY_TRIVIAL
 
 /singleton/surgery_step/internal/replace_external_plating/g2
 	name = "Replace G2 External Armour Plating"
 	min_duration = 90
 	max_duration = 100
 	fast_repair = TRUE
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_TRAINED)
 
 /singleton/surgery_step/internal/degunk/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
@@ -727,19 +754,21 @@
 /singleton/surgery_step/robotics/repair_endoskeleton
 	name = "Repair Endoskeleton"
 	allowed_tools = list(
-		/obj/item/weldingtool = 100,
+		TOOL_WELDER = 100,
 		/obj/item/gun/energy/plasmacutter = 50
 	)
 
 	min_duration = 15
 	max_duration = 25
+	skill_requirements = alist(ROBOTICS_SKILL_COMPONENT = SKILL_LEVEL_TRAINED)
+	skill_diff_fail_modifier = SURGERY_DIFFICULTY_MEDIUM
 
 /singleton/surgery_step/robotics/repair_endoskeleton/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
 		return FALSE
 
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
-	if(tool.iswelder())
+	if(tool.tool_behaviour == TOOL_WELDER)
 		var/obj/item/weldingtool/welder = tool
 		if(!welder.isOn() || welder.get_fuel() < 5)
 			return FALSE
@@ -755,7 +784,7 @@
 	..()
 
 /singleton/surgery_step/robotics/repair_endoskeleton/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(tool.iswelder())
+	if(tool.tool_behaviour == TOOL_WELDER)
 		var/obj/item/weldingtool/welder = tool
 		if(!welder.isOn() && !welder.use(5, user))
 			user.visible_message(SPAN_WARNING("[user]'s [tool] shut off before the procedure was finished."), \

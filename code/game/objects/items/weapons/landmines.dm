@@ -225,7 +225,7 @@
 	fragment_damage = 10
 
 	///The airlock that we are observing for when it opens, to explode
-	var/obj/machinery/door/airlock/door_rigged
+	var/obj/structure/machinery/door/airlock/door_rigged
 
 //Prevent this mine to be used like a normal one
 /obj/item/landmine/frag/door_rigging/attack_self(mob/user)
@@ -235,7 +235,7 @@
 /obj/item/landmine/frag/door_rigging/resolve_attackby(atom/A, mob/user, click_parameters)
 	. = ..()
 
-	if(istype(A, /obj/machinery/door/airlock))
+	if(istype(A, /obj/structure/machinery/door/airlock))
 
 		door_rigged = A
 		var/turf/turf_under_door = get_turf(door_rigged)
@@ -458,7 +458,7 @@
 	icon = 'icons/obj/item/landmine/claymore.dmi'
 	icon_state = "m20"
 	var/datum/wires/landmine/claymore/trigger_wire
-	var/obj/item/device/assembly/signaler/signaler
+	var/obj/item/assembly/signaler/signaler
 
 /obj/item/landmine/claymore/mechanics_hints(mob/user, distance, is_adjacent)
 	. += ..()
@@ -478,7 +478,7 @@
 	icon_state = (src.deployed) ? "[initial(icon_state)]_active" : initial(icon_state)
 
 /obj/item/landmine/claymore/attackby(obj/item/attacking_item, mob/user)
-	if(istype(attacking_item, /obj/item/device/assembly/signaler))
+	if(istype(attacking_item, /obj/item/assembly/signaler))
 		if(!isnull(signaler))
 			to_chat(user, SPAN_NOTICE("There is already a signaler inserted in \the [src]."))
 			return

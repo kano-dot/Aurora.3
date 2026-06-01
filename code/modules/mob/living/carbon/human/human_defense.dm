@@ -13,7 +13,7 @@ emp_act
 	if(species_check)
 		return species_check
 
-	if(!is_physically_disabled())
+	if(!MOB_IS_INCAPACITATED(INCAPACITATION_DISABLED))
 		var/deflection_chance = check_martial_deflection_chance()
 		if(prob(deflection_chance))
 			visible_message(SPAN_WARNING("\The [src] deftly dodges \the [hitting_projectile]!"), SPAN_NOTICE("You deftly dodge \the [hitting_projectile]!"))
@@ -179,10 +179,6 @@ emp_act
 
 	if(emp_protect_ipc)
 		RemoveElement(/datum/element/empprotection, emp_protect_ipc)
-
-	if(!(.|emp_protect_ipc & EMP_PROTECT_CONTENTS))
-		for(var/obj/O in src)
-			O.emp_act(severity)
 
 /mob/living/carbon/human/get_attack_victim(obj/item/I, mob/living/user, var/target_zone)
 	if(a_intent != I_HELP)

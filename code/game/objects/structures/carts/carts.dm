@@ -21,15 +21,13 @@ ABSTRACT_TYPE(/obj/structure/cart)
 /obj/structure/cart/disassembly_hints(mob/user, distance, is_adjacent)
 	. += ..()
 	. += "An empty cart can be taken apart with a <b>wrench</b> or a <b>welder</b>. Or a <b>plasma cutter</b>, if you're that hardcore. If it contains anything when disassembled, these contents will spill onto the floor."
-
-/obj/structure/cart/proc/take_apart(var/mob/user = null, var/obj/object)
+/obj/structure/cart/proc/take_apart(var/mob/user = null, var/obj/item/object)
 	if(user)
-		if(iswelder(object))
+		if(object.tool_behaviour == TOOL_WELDER)
 			var/obj/item/welder = object
 			welder.play_tool_sound(get_turf(src), 50)
-
 		user.visible_message("<b>[user]</b> starts taking apart the [src]...", SPAN_NOTICE("You start disassembling the [src]..."))
-		if (!do_after(user, 30, do_flags = DO_DEFAULT & ~DO_USER_SAME_HAND))
+		if(!do_after(user, 30, do_flags = DO_DEFAULT & ~DO_USER_SAME_HAND))
 			return
 
 	dismantle()
@@ -46,7 +44,7 @@ ABSTRACT_TYPE(/obj/structure/cart)
 	. = ..()
 
 	if(user.stat || user.stunned || user.weakened || user.paralysis || user.lying || user.restrained())
-		if(user==pulling)
+		if(user == pulling)
 			pulling = null
 			user.pulledby = null
 			to_chat(user, SPAN_WARNING("You lost your grip!"))
@@ -60,11 +58,7 @@ ABSTRACT_TYPE(/obj/structure/cart)
 		user.pulledby = null
 		if(user==pulling)
 			return
-	if(pulling && (get_dir(src.loc, pulling.loc) == direction))
-		to_chat(user, SPAN_WARNING("You cannot go there."))
-		// return
 
-	driving = 1
 	var/turf/turf = null
 	if(pulling)
 		turf = pulling.loc
@@ -81,16 +75,16 @@ ABSTRACT_TYPE(/obj/structure/cart)
 				pulling = null
 				user.pulledby = null
 			pulling.set_dir(get_dir(pulling, src))
-	driving = 0
 
 /obj/structure/cart/Move()
 	. = ..()
-	if (pulling && (get_dist(src, pulling) > 1))
-		pulling.pulledby = null
-		to_chat(pulling, SPAN_WARNING("You lost your grip!"))
-		pulling = null
-	if(has_gravity())
-		playsound(src, movesound, 50, 1)
+	if(.)
+		if(pulling && (get_dist(src, pulling) > 1))
+			pulling.pulledby = null
+			to_chat(pulling, SPAN_WARNING("You lost your grip!"))
+			pulling = null
+		if(has_gravity())
+			playsound(src, movesound, 10, TRUE)
 
 /obj/structure/cart/CtrlClick(var/mob/user)
 	if(in_range(src, user))

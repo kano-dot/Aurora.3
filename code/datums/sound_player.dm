@@ -35,6 +35,8 @@ GLOBAL_DATUM_INIT(sound_player, /singleton/sound_player, new)
 
 	return PlaySoundDatum(source, sound_id, S, range, prefer_mute, sound_type)
 
+/// The 'repeat = FALSE' here seems to cause scattered sound cutoff issues due to any /sounds created reverting to the default channel zero. Refer to https://github.com/Aurorastation/Aurora.3/pull/21845.
+/// This suggests that further work needs to be done with managing channels when a sound gets assigned default channel 0.
 /singleton/sound_player/proc/PlayNonloopingSound(atom/source, sound_id, sound, volume, range, falloff = 1, echo, frequency, prefer_mute, sound_type = ASFX_AMBIENCE)
 	var/sound/S = istype(sound, /sound) ? sound : new(sound)
 	S.environment = 0 // Ensures a 3D effect even if x/y offset happens to be 0 the first time it's played
@@ -140,7 +142,11 @@ GLOBAL_DATUM_INIT(sound_player, /singleton/sound_player, new)
 
 /datum/sound_token/Destroy()
 	Stop()
-	. = ..()
+	source = null
+	if (listeners)
+		listeners.Cut()
+	sound = null
+	return ..()
 
 /datum/sound_token/proc/SetVolume(new_volume)
 	new_volume = clamp(new_volume, 0, 100)
@@ -274,11 +280,11 @@ GLOBAL_DATUM_INIT(sound_player, /singleton/sound_player, new)
 	return A && PrivIsValidEnvironment(A.sound_environment) ? A.sound_environment : sound.environment
 
 /datum/sound_token/proc/PrivIsValidEnvironment(environment)
-	if(islist(environment) && length(environment) != 23)
-		return FALSE
-	if(!isnum(environment) || environment < 0 || environment > 25)
-		return FALSE
-	return TRUE
+	if(islist(environment))
+		return length(environment) == 23
+	if(isnum(environment))
+		return environment >= -1 && environment <= 25
+	return FALSE
 
 /datum/sound_token/static_environment/PrivGetEnvironment()
 	return sound.environment

@@ -72,7 +72,7 @@
 	heat_level_3 = 2400
 
 	body_temperature = null
-	passive_temp_gain = 10
+	passive_temp_gain = 5 // Degrees kelvin per second
 
 	inherent_verbs = list(
 		/mob/living/carbon/human/proc/change_monitor,
@@ -171,11 +171,11 @@
 	var/machine_ui_theme = "hackerman"
 
 
-/datum/species/machine/handle_temperature_regulation(mob/living/carbon/human/human)
+/datum/species/machine/handle_temperature_regulation(mob/living/carbon/human/human, seconds_per_tick)
 	// No cooling unit = you're cooking. Broken cooling unit effects are handled by the organ itself.
 	// Here we just want to check if it's been removed.
 	// 500K is about 226 degrees. Spicy!
-	var/base_heat_gain = passive_temp_gain
+	var/base_heat_gain = passive_temp_gain * seconds_per_tick
 	var/obj/item/organ/internal/machine/cooling_unit/cooling = human.internal_organs_by_name[BP_COOLING_UNIT]
 	if(!cooling || (cooling?.status & ORGAN_DEAD))
 		base_heat_gain *= 4 //uh oh
@@ -268,7 +268,7 @@
 /datum/species/machine/handle_death(var/mob/living/carbon/human/H)
 	..()
 	H.f_style = ""
-	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, update_hair)), 100)
+	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, update_hair)), 100, TIMER_STOPPABLE|TIMER_DELETE_ME)
 
 /datum/species/machine/sanitize_name(var/new_name)
 	return sanitizeName(new_name, allow_numbers = 1)
@@ -303,15 +303,15 @@
 	if (!target || !player)
 		return
 
-	if (establish_db_connection(GLOB.dbcon) && target.character_id)
+	if (SSdbcore.Connect() && target.character_id)
 		var/status = FALSE
 		var/sql_status = FALSE
 		if (target.internal_organs_by_name[BP_IPCTAG])
 			status = TRUE
 
 		var/list/query_details = list("char_id" = target.character_id)
-		var/DBQuery/query = GLOB.dbcon.NewQuery("SELECT tag_status FROM ss13_characters_ipc_tags WHERE char_id = :char_id:")
-		query.Execute(query_details)
+		var/datum/db_query/query = SSdbcore.NewQuery("SELECT tag_status FROM ss13_characters_ipc_tags WHERE char_id = :char_id",query_details)
+		query.Execute()
 
 		if (query.NextRow())
 			sql_status = text2num(query.item[1])
@@ -319,8 +319,10 @@
 				return
 
 			query_details["status"] = status
-			var/DBQuery/update_query = GLOB.dbcon.NewQuery("UPDATE ss13_characters_ipc_tags SET tag_status = :status: WHERE char_id = :char_id:")
-			update_query.Execute(query_details)
+			var/datum/db_query/update_query = SSdbcore.NewQuery("UPDATE ss13_characters_ipc_tags SET tag_status = :status: WHERE char_id = :char_id",query_details)
+			update_query.Execute()
+			qdel(update_query)
+		qdel(query)
 
 /datum/species/machine/get_light_color(mob/living/carbon/human/H)
 	if (!istype(H))

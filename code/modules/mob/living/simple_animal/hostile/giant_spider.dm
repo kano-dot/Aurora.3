@@ -28,7 +28,7 @@
 	blood_type = "#51C404"
 	blood_amount = 150
 	stop_automated_movement_when_pulled = 0
-	maxHealth = 200
+	maxhealth = 200
 	health = 200
 	melee_damage_lower = 15
 	melee_damage_upper = 20
@@ -45,7 +45,7 @@
 	mob_size = 6
 	smart_melee = FALSE
 
-	attacktext = "bitten"
+	attacktext = "bites"
 	attack_emote = "skitters toward"
 	attack_sound = 'sound/weapons/bite.ogg'
 	emote_sounds = list('sound/effects/creatures/spider_critter.ogg')
@@ -59,7 +59,7 @@
 	icon_living = "greimorian_worker"
 	icon_dead = "greimorian_worker_dead"
 	blood_amount = 50
-	maxHealth = 40
+	maxhealth = 40
 	health = 40
 	melee_damage_lower = 5
 	melee_damage_upper = 10
@@ -77,7 +77,7 @@
 	icon_living = "greimorian_servant"
 	icon_dead = "greimorian_servant_dead"
 	blood_amount = 150
-	maxHealth = 200
+	maxhealth = 200
 	health = 200
 	melee_damage_lower = 15
 	melee_damage_upper = 20
@@ -86,6 +86,7 @@
 	speed = -2
 	venom_type = /singleton/reagent/toxin/greimorian_eggs
 	fed = 1
+	lighting_alpha = LIGHTING_PLANE_ALPHA_SOMEWHAT_INVISIBLE
 	var/playable = TRUE
 	sample_data = list("Genetic markers identified as being linked with stem cell differentiaton", "Cellular structures indicative of high offspring production", "Tissue sample contains high neural cell content")
 
@@ -101,7 +102,7 @@
 	icon_living = "greimorian_hunter"
 	icon_dead = "greimorian_hunter_dead"
 	blood_amount = 90
-	maxHealth = 120
+	maxhealth = 120
 	health = 120
 	melee_damage_lower = 10
 	melee_damage_upper = 20
@@ -117,7 +118,7 @@
 	icon_state = "greimorian_jackal"
 	icon_living = "greimorian_jackal"
 	icon_dead = "greimorian_jackal_dead"
-	maxHealth = 100
+	maxhealth = 100
 	health = 100
 	melee_damage_lower = 5
 	melee_damage_upper = 10
@@ -134,7 +135,7 @@
 	icon_state = "greimorian_bombardier"
 	icon_living = "greimorian_bombardier"
 	icon_dead = "greimorian_bombardier_dead"
-	maxHealth = 60
+	maxhealth = 60
 	health = 60
 	melee_damage_lower = 5
 	melee_damage_upper = 10
@@ -165,6 +166,8 @@
 	get_light_and_color(parent)
 	add_language(LANGUAGE_GREIMORIAN)
 	add_language(LANGUAGE_GREIMORIAN_HIVEMIND)
+	remove_language(LANGUAGE_TCB)
+	default_language = GLOB.all_languages[LANGUAGE_GREIMORIAN]
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/servant/Initialize()
 	. = ..()
@@ -176,8 +179,8 @@
 		SSghostroles.add_spawn_atom("servant", src)
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/servant/Destroy()
-	. = ..()
 	SSghostroles.remove_spawn_atom("servant", src)
+	return ..()
 
 /mob/living/simple_animal/hostile/giant_spider/on_attack_mob(var/mob/hit_mob, var/obj/item/organ/external/limb)
 	. = ..()
@@ -270,7 +273,7 @@
 							if(O.anchored)
 								continue
 
-							if(istype(O, /obj/item) || istype(O, /obj/structure) || istype(O, /obj/machinery))
+							if(istype(O, /obj/item) || istype(O, /obj/structure))
 								cocoon_target = O
 								busy = MOVING_TO_TARGET
 								stop_automated_movement = 1
@@ -340,11 +343,6 @@
 					if(!S.anchored)
 						S.forceMove(C)
 						large_cocoon = 1
-				if (istype(aa, /obj/machinery))
-					var/obj/machinery/M = aa
-					if(!M.anchored)
-						M.forceMove(C)
-						large_cocoon = 1
 			if(large_cocoon)
 				C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
 		busy = 0
@@ -404,11 +402,6 @@
 					if(!S.anchored)
 						S.forceMove(C)
 						large_cocoon = 1
-				if (istype(P, /obj/machinery))
-					var/obj/machinery/M = P
-					if(!M.anchored)
-						M.forceMove(C)
-						large_cocoon = 1
 			if(large_cocoon)
 				C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
 
@@ -417,6 +410,10 @@
 	set name = "Lay Eggs"
 	set desc = "Lay a clutch of eggs to make new spiderlings. This will cost one food point."
 	set category = "Greimorian"
+
+	if(fed <= 0)
+		to_chat(src, SPAN_WARNING("You do not have the nutrients to do this. Try cocooning a corpse!"))
+		return
 
 	var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
 	if(!E && fed > 0)
@@ -433,6 +430,9 @@
 	set desc = "Lay a greimorian servant, which can be player-controlled. This will cost one food point."
 	set category = "Greimorian"
 
+	if(fed <= 0)
+		to_chat(src, SPAN_WARNING("You do not have the nutrients to do this. Try cocooning a corpse!"))
+		return
 
 	var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
 	if(!E && fed > 0)

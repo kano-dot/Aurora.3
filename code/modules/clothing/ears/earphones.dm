@@ -1,21 +1,13 @@
-/*
-	Earphones that use our sound_player system to play sounds from a music cartridge to their wearer.
-
-	Current Features:
-	- All earphones have a cartridge slot. Cartridges can be inserted by clicking an earphone, and removed via an eject_music_cartridge() verb.
-	- Inserting a cartridge will load a playlist containing /datum/tracks, where track names and sound files are loaded.
-	- Shift+Clicking will Start/Stop a playlist, creating or deleting an active sound_player token.
-	- Alt+Clicking with Pause/Unpause the current track, preserving an active sound_player token.
-	- attack_self will eject the music cartridge. Ejecting a music cartridge also terminates the sound_player token.
-	- Volume controllable via verb.
-
-	Missing features i am too weak to figure out:
-	- There is no auto—next song, and a user must manually use next_song() or previous_song() verbs to iterate through a playlist.
-	- Part and parcel with no auto-next: Tracks automatically loop due to using the PlayLoopingSound() proc. Ideally, tracks should not loop.
-	- There is no accomodation for user-uploaded sound files.
-	- There are no UI implementations of earphone controls, which could be more user friendly.
-*/
-
+/**
+ * Earphones that use our sound_player system to play sounds from a music cartridge to their wearer.
+ *
+ * Current Features:
+ * - All earphones have a cartridge slot. Cartridges can be inserted by clicking an earphone, and removed via an eject_music_cartridge() verb.
+ * - Inserting a cartridge will load a playlist containing /datum/tracks, where track names and sound files are loaded.
+ * - Alt+Clicking will Start/Stop a playlist, creating or deleting an active sound_player token.
+ * - attack_self will eject the music cartridge. Ejecting a music cartridge also terminates the sound_player token.
+ * - Volume controllable via verb.
+ */
 /obj/item/clothing/ears/earphones
 	name = "earphones"
 	desc = "A pair of wireless earphones. Includes a little slot for a music cartridge."
@@ -56,8 +48,7 @@
 /obj/item/clothing/ears/earphones/mechanics_hints(mob/user, distance, is_adjacent)
 	. += ..()
 	. += "Full controls can be found in the Verbs list, under <b>Object</b> tab -> <b>Earphones</b>."
-	. += "ALT-click \the [src] to quickly Pause/Resume the current track."
-	. += "SHIFT-click \the [src] to quickly Play/Stop the current playlist (this will reset the current track to the start.)"
+	. += "ALT-click \the [src] to quickly Play/Stop the current track."
 	. += "Use \the [src] while in-hand to eject the cartridge."
 
 /obj/item/clothing/ears/earphones/Destroy()
@@ -81,6 +72,11 @@
 			else
 				to_chat(user, SPAN_WARNING("There's already a music cartridge in there."))
 				..()
+
+/// Ensure we stop playing music when dropped for any reason.
+/obj/item/clothing/ears/earphones/dropped(mob/user)
+	. = ..()
+	StopPlaying()
 
 /obj/item/clothing/ears/earphones/proc/read_music_cartridge(obj/item/music_cartridge/cartridge, mob/user)
 	StopPlaying() // New cartridge in, so clean up our sound token if it hasn't already been for some reason
@@ -137,7 +133,7 @@
 	if(!soundplayer_token)
 		if(current_playlist && (current_playlist.len > 0))
 			var/sound/sound_to_play = current_playlist[playlist_index].song_path
-			soundplayer_token = GLOB.sound_player.PlayNonloopingSound(src, src, sound_to_play, volume, range, 20, prefer_mute = FALSE, sound_type = ASFX_MUSIC)
+			soundplayer_token = GLOB.sound_player.PlayLoopingSound(src, src, sound_to_play, volume, range, 20, prefer_mute = FALSE, sound_type = ASFX_MUSIC)
 
 			// Queue the next_song() proc when the current song ends. Clean up handled under next_song() which also calls stopplaying() to end this token
 			autoplay_timeleft = current_playlist[playlist_index].song_length
@@ -264,6 +260,8 @@
 	else
 		soundplayer_token.SetVolume(volume)
 
+/// Pain in the ass. This paused all sound in the game; when resuming, all queued sounds (bags, doors, etc.) would play at once. Not a useful enough feature to burn time on.
+/*
 /obj/item/clothing/ears/earphones/verb/pause_unpause()
 	set name = "Pause/Unpause"
 	set category = "Object.Earphones"
@@ -300,6 +298,7 @@
 				update_clothing_icon()
 		else
 			play_stop() //No soundtoken? They probably meant to use the other verb instead.
+*/
 
 /obj/item/clothing/ears/earphones/verb/next_song_verb()
 	set name = "Next Song"
@@ -335,9 +334,6 @@
 */
 
 /obj/item/clothing/ears/earphones/AltClick(mob/user)
-	pause_unpause()
-
-/obj/item/clothing/ears/earphones/ShiftClick(mob/user)
 	play_stop()
 
 /*
@@ -403,7 +399,7 @@ Earphone Variants
 	desc = "A music cartridge."
 	icon = 'icons/obj/item/music_cartridges.dmi'
 	icon_state = "generic"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	var/list/datum/track/tracks
 	/// Whether or not this cartridge can be removed from the datum/jukebox it belongs to.
 	var/hardcoded = FALSE
@@ -497,6 +493,18 @@ Earphone Variants
 // Hardcoded variant
 /obj/item/music_cartridge/adhomai_swing/demo
 	hardcoded = TRUE
+
+/obj/item/music_cartridge/adhomai_vibes
+	name = "Adhomai vibes"
+	desc = "A red music cartridge holding various music considered to fit the vibe of Adhomai."
+	icon_state = "adhomai"
+
+	tracks = list(
+		new/datum/track("Adhomai Vibes #1", 'sound/music/lobby/adhomai/adhomai-1.ogg', 4 MINUTES + 15 SECONDS, /obj/item/music_cartridge/adhomai_vibes),
+		new/datum/track("Adhomai Vibes #2", 'sound/music/lobby/adhomai/adhomai-2.ogg', 3 MINUTES + 55 SECONDS, /obj/item/music_cartridge/adhomai_vibes),
+		new/datum/track("Adhomai Vibes #3", 'sound/music/lobby/adhomai/adhomai-3.ogg', 5 MINUTES + 50 SECONDS, /obj/item/music_cartridge/adhomai_vibes),
+		new/datum/track("Adhomai Vibes #4", 'sound/music/lobby/adhomai/adhomai-4.ogg', 4 MINUTES + 24 SECONDS, /obj/item/music_cartridge/adhomai_vibes)
+	)
 
 /obj/item/music_cartridge/europa_various
 	name = "Europa: Best of the 50s"

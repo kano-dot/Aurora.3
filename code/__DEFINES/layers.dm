@@ -100,6 +100,7 @@
 	#define MOB_EMISSIVE_LAYER 3.012
 	#define MOB_SHADOW_UPPER_LAYER 3.013
 	#define HOLOMAP_OVERLAY_LAYER 3.02
+	#define MOB_LOWER_FIRE_OVERLAY 3.03
 	//LYING MOB AND HUMAN
 	#define LYING_MOB_LAYER 3.07
 	#define LYING_HUMAN_LAYER 3.08
@@ -107,6 +108,7 @@
 	//HUMAN
 	#define BASE_HUMAN_LAYER 3.10
 	//MOB_LAYER 4
+	#define MOB_UPPER_FIRE_OVERLAY 4.01
 	#define UNDERDOOR 4.03
 	#define CLOSED_DOOR_LAYER 4.04
 	#define ABOVE_DOOR_LAYER 4.05
@@ -160,12 +162,12 @@
 
 #define GHOST_PLANE 80
 
+//-------------------- Lighting ---------------------
+
 #define LIGHTING_PLANE 100
 	#define LIGHTING_LAYER 1
 #define EXTERIOR_LIGHTING_PLANE 101
 #define NVG_PLANE 110
-
-#define BALLOON_CHAT_PLANE 110
 
 #define O_LIGHTING_VISUAL_PLANE 120
 #define O_LIGHTING_VISUAL_LAYER 16
@@ -183,7 +185,12 @@
 	#define SUPERMATTER_WALL_LAYER 3
 	#define LIGHTNING_LAYER 4
 
+//--------------- FULLSCREEN RUNECHAT BUBBLES ------------
+
+///Popup Chat Messages
 #define RUNECHAT_PLANE 501
+/// Plane for balloon text (text that fades up)
+#define BALLOON_CHAT_PLANE 502
 
 #define FULLSCREEN_PLANE 900
 	#define FULLSCREEN_LAYER 1

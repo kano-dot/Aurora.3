@@ -13,6 +13,10 @@
 /turf/unsimulated/mineral/konyang
 	color = "#514e5c"
 
+/turf/unsimulated/mineral/assunzione
+	name = "impassable substrate"
+	color = "#222222"
+
 /// This is a global list so we can share the same list with all mineral turfs; it's the same for all of them anyways.
 GLOBAL_LIST_INIT(mineral_can_smooth_with, list(
 	/turf/simulated/mineral,
@@ -263,18 +267,18 @@ GLOBAL_LIST_INIT(mineral_can_smooth_with, list(
 		to_chat(user, SPAN_WARNING("You don't have the dexterity to do this!"))
 		return
 
-	if(istype(attacking_item, /obj/item/device/core_sampler))
-		var/obj/item/device/core_sampler/C = attacking_item
+	if(istype(attacking_item, /obj/item/core_sampler))
+		var/obj/item/core_sampler/C = attacking_item
 		C.sample_item(src, user)
 		return
 
-	if(istype(attacking_item, /obj/item/device/depth_scanner))
-		var/obj/item/device/depth_scanner/C = attacking_item
+	if(istype(attacking_item, /obj/item/depth_scanner))
+		var/obj/item/depth_scanner/C = attacking_item
 		C.scan_atom(user, src)
 		return
 
-	if(istype(attacking_item, /obj/item/device/measuring_tape))
-		var/obj/item/device/measuring_tape/P = attacking_item
+	if(istype(attacking_item, /obj/item/measuring_tape))
+		var/obj/item/measuring_tape/P = attacking_item
 		user.visible_message(SPAN_NOTICE("\The [user] extends \the [P] towards \the [src].") , SPAN_NOTICE("You extend \the [P] towards \the [src]."))
 		if(do_after(user,25))
 			if(!istype(src, /turf/simulated/mineral))

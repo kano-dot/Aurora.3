@@ -200,7 +200,7 @@
 			return
 
 	if(seed)
-		if(GET_SEED_TRAIT(seed, TRAIT_PRODUCES_POWER) && attacking_item.iscoil())
+		if(GET_SEED_TRAIT(seed, TRAIT_PRODUCES_POWER) && attacking_item.tool_behaviour == TOOL_CABLECOIL)
 			var/obj/item/stack/cable_coil/C = attacking_item
 			if(C.use(5))
 				//TODO: generalize this.
@@ -321,7 +321,7 @@
 
 	if(GET_SEED_TRAIT(seed, TRAIT_SPREAD) > 0)
 		to_chat(user, SPAN_NOTICE("You plant the [src.name]."))
-		new /obj/machinery/portable_atmospherics/hydroponics/soil/invisible(get_turf(user),src.seed)
+		new /obj/structure/machinery/portable_atmospherics/hydroponics/soil/invisible(get_turf(user),src.seed)
 		qdel(src)
 		return
 

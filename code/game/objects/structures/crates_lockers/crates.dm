@@ -243,7 +243,13 @@
 	locked = TRUE
 	secure = TRUE
 	secure_lights = TRUE
-	health = 200
+	maxhealth = OBJECT_HEALTH_VERY_HIGH
+	armor = list(
+		MELEE = ARMOR_MELEE_RESISTANT,
+		BULLET = ARMOR_BALLISTIC_MEDIUM,
+		LASER = ARMOR_LASER_MEDIUM,
+		ENERGY = ARMOR_ENERGY_RESISTANT,
+	)
 
 /obj/structure/closet/crate/plastic
 	name = "plastic crate"
@@ -546,7 +552,7 @@
 				S.forceMove(src)
 				break
 		if(!found)
-			for(var/obj/machinery/M in loc)
+			for(var/obj/structure/machinery/M in loc)
 				if(!M.anchored)
 					M.forceMove(src)
 					break
@@ -573,7 +579,7 @@
 				S.forceMove(src)
 				break
 		if(!found)
-			for(var/obj/machinery/M in loc)
+			for(var/obj/structure/machinery/M in loc)
 				if(!M.anchored)
 					M.forceMove(src)
 					break
@@ -787,5 +793,7 @@
 	new /obj/item/storage/box/midynhr_water(src)
 	new /obj/item/storage/box/fancy/yoke/grape_juice(src)
 	new /obj/item/storage/box/fancy/yoke/beetle_milk(src)
+	new /obj/item/storage/box/unique/tea/rasnif(src)
+	new /obj/item/storage/box/unique/tea/messa(src)
 	new /obj/item/reagent_containers/toothpaste(src)
 	new /obj/item/reagent_containers/food/drinks/flask/vacuumflask/mouthwash(src)

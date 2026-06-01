@@ -77,7 +77,7 @@
 	can_be_buckled = TRUE
 
 /obj/structure/closet/body_bag/attackby(obj/item/attacking_item, mob/user)
-	if (attacking_item.ispen())
+	if (attacking_item.tool_behaviour == TOOL_PEN)
 		var/t = tgui_input_text(user, "What would you like the label to be?", name)
 		if (user.get_active_hand() != attacking_item)
 			return TRUE
@@ -92,7 +92,7 @@
 		else
 			src.name = "body bag"
 		return TRUE
-	else if(attacking_item.iswirecutter())
+	else if(attacking_item.tool_behaviour == TOOL_WIRECUTTER)
 		to_chat(user, "You cut the tag off the bodybag.")
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 		src.name = "body bag"
@@ -159,6 +159,10 @@
 	if(stasis_power)
 		C.stasis_power = stasis_power
 
+/obj/item/bodybag/cryobag/Destroy()
+	color = null
+	return ..()
+
 /obj/structure/closet/body_bag/cryobag
 	name = "stasis bag"
 	desc = "A reusable plastic bag designed to prevent additional damage to an occupant, especially useful if short on time or in \
@@ -195,6 +199,7 @@
 /obj/structure/closet/body_bag/cryobag/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
 	QDEL_NULL(airtank)
+	overlays.Cut()
 	return ..()
 
 /obj/structure/closet/body_bag/cryobag/Entered(atom/movable/AM)

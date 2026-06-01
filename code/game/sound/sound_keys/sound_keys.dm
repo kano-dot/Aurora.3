@@ -205,13 +205,12 @@
 		'sound/weapons/genhit3.ogg'
 	)
 
-/datum/sound_effect/hiss_sound
-	key = SFX_HISS
+/datum/sound_effect/fire_ambience
+	key = SFX_FIRE
 	file_paths = list(
-		'sound/voice/hiss1.ogg',
-		'sound/voice/hiss2.ogg',
-		'sound/voice/hiss3.ogg',
-		'sound/voice/hiss4.ogg'
+		'sound/ambience/fire/Fire_Ambient_01.ogg',
+		'sound/ambience/fire/Fire_Ambient_02.ogg',
+		'sound/ambience/fire/Fire_Ambient_03.ogg'
 	)
 
 /datum/sound_effect/page_sound
@@ -409,6 +408,14 @@
 	key = SFX_OUT_OF_AMMO_SHOTGUN
 	file_paths = list(
 		'sound/weapons/empty/empty_shotgun1.ogg'
+	)
+
+/datum/sound_effect/plastic_dry_fire
+	key = SFX_PLASTIC_DRY_FIRE
+	file_paths = list(
+		'sound/weapons/empty/dryfire_plastic_01.ogg',
+		'sound/weapons/empty/dryfire_plastic_02.ogg',
+		'sound/weapons/empty/dryfire_plastic_03.ogg'
 	)
 
 /datum/sound_effect/metal_slide_reload
@@ -887,4 +894,12 @@
 	file_paths = list(
 		'sound/effects/creatures/robot_talk_1.ogg',
 		'sound/effects/creatures/robot_talk_2.ogg'
+	)
+
+/datum/sound_effect/whiteboard_scribble
+	key = SFX_WHITEBOARD_SCRIBBLE
+	file_paths = list(
+		'sound/effects/whiteboard_scribble_1.ogg',
+		'sound/effects/whiteboard_scribble_2.ogg',
+		'sound/effects/whiteboard_scribble_3.ogg'
 	)

@@ -19,10 +19,15 @@
 	if(.)
 		visible_message("<b>\The [src]</b> points to \the [pointing_at].")
 
-/mob/living/drop_from_inventory(var/obj/item/item, var/atom/target)
-	. = ..(item, target)
-	if(item && item.GetID())
+/mob/living/drop_from_inventory(var/obj/item/item, var/atom/target, update_icons = TRUE, force = FALSE)
+	. = ..()
+	if(item?.GetID())
 		BITSET(hud_updateflag, ID_HUD) //If we drop our ID, update ID HUD
+
+/mob/living/carbon/drop_from_inventory(obj/item/W, atom/target, update_icons = TRUE, force = FALSE)
+	if(!force && (W in internal_organs))
+		return
+	return ..()
 
 /*one proc, four uses
 swapping: if it's 1, the mobs are trying to switch, if 0, non-passive is pushing passive
@@ -161,9 +166,9 @@ default behaviour is:
 			if(ishuman(target_movable_atom))
 				var/mob/living/carbon/human/target_human = target_movable_atom
 				if(target_human.grabbed_by)
-					for(var/obj/item/grab/grab_item in target_human.grabbed_by)
-						step(grab_item.assailant, get_dir(grab_item.assailant, target_human))
-						grab_item.adjust_position()
+					for (var/obj/item/grab/G in list(target_human.l_hand, target_human.r_hand))
+						step(G.assailant, get_dir(G.assailant, target_human))
+						G.adjust_position()
 		now_pushing = FALSE
 
 /**
@@ -218,8 +223,8 @@ default behaviour is:
 
 /mob/living/verb/succumb()
 	set hidden = 1
-	if(health < maxHealth / 3)
-		adjustBrainLoss(health + maxHealth * 2) // Deal 2x health in BrainLoss damage, as before but variable.
+	if(health < maxhealth / 3)
+		adjustBrainLoss(health + maxhealth * 2) // Deal 2x health in BrainLoss damage, as before but variable.
 		to_chat(src, SPAN_NOTICE("You have given up life and succumbed to death."))
 	else
 		to_chat(src, SPAN_WARNING("You are not injured enough to succumb to death!"))
@@ -227,10 +232,10 @@ default behaviour is:
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
-		health = maxHealth
+		health = maxhealth
 		set_stat(CONSCIOUS)
 	else
-		health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+		health = maxhealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage
@@ -275,12 +280,12 @@ default behaviour is:
 // I touched them without asking... I'm soooo edgy ~Erro (added nodamage checks)
 
 /mob/living/proc/getBruteLoss()
-	return maxHealth - health
+	return maxhealth - health
 
 /mob/living/proc/adjustBruteLoss(var/amount)
 	if(status_flags & GODMODE)
 		return
-	health = clamp(health - amount, 0, maxHealth)
+	health = clamp(health - amount, 0, maxhealth)
 
 /mob/living/proc/getOxyLoss()
 	return 0
@@ -340,10 +345,10 @@ default behaviour is:
 	adjustBruteLoss((amount * 0.5)-getBruteLoss())
 
 /mob/living/proc/getMaxHealth()
-	return maxHealth
+	return maxhealth
 
 /mob/living/proc/setMaxHealth(var/newMaxHealth)
-	maxHealth = newMaxHealth
+	maxhealth = newMaxHealth
 
 // ++++ROCKDTBEN++++ MOB PROCS //END
 
@@ -418,7 +423,7 @@ default behaviour is:
 	src.updatehealth()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_organ_damage(var/brute, var/burn, var/emp=0)
+/mob/living/proc/take_organ_damage(var/brute, var/burn, var/emp=0, var/used_weapon = null, var/damage_flags, var/silent)
 	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
@@ -699,7 +704,7 @@ default behaviour is:
 /mob/living/proc/escape_inventory(obj/item/holder/H)
 	if(H != src.loc)
 		return
-	if(health < maxHealth * 0.6)
+	if(health < maxhealth * 0.6)
 		to_chat(src, SPAN_WARNING("You're too injured to escape..."))
 		return
 
@@ -792,6 +797,7 @@ default behaviour is:
 	last_special = world.time
 	resting = !resting
 	to_chat(src, SPAN_NOTICE("You are now [resting ? "resting" : "getting up"]."))
+	SEND_SIGNAL(src, COMSIG_MOB_RESTED)
 	update_canmove()
 	update_icon()
 
@@ -817,11 +823,6 @@ default behaviour is:
 	if(layer > UNDERDOOR)//Don't toggle it if we're hiding
 		layer = UNDERDOOR
 		underdoor = 1
-
-/mob/living/carbon/drop_from_inventory(var/obj/item/W, var/atom/target = null)
-	if(W in internal_organs)
-		return
-	..()
 
 /mob/living/touch_map_edge()
 

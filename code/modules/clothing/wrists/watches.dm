@@ -9,6 +9,35 @@
 	action_button_name = "Check time"
 	default_action_type = /datum/action/item_action/watch
 
+/obj/item/clothing/wrists/watch/mechanics_hints(mob/user, distance, is_adjacent)
+	. = ..()
+	. += "You can <b>Alt-Shift-Click</b> to swap \the [src] to your [src.flipped ? "right" : "left"] wrist."
+
+/obj/item/clothing/wrists/watch/proc/swap_wrists()
+	set category = "Object.Equipped"
+	set name = "Flip Wristwear"
+	set src in usr
+
+	handle_swap_wrists(usr)
+
+/obj/item/clothing/wrists/watch/AltShiftClick(user)
+	handle_swap_wrists(user)
+
+/obj/item/clothing/wrists/watch/proc/handle_swap_wrists(mob/user)
+	if(use_check_and_message(user))
+		return
+
+	flipped = !flipped
+	if(("[initial(icon_state)]_flip") in icon_states(icon))
+		icon_state = "[initial(item_state)][flipped ? "_flip" : ""]"
+	item_state = "[initial(item_state)][flipped ? "_flip" : ""]"
+	to_chat(user, "You change \the [src] to be on your [src.flipped ? "left" : "right"] wrist.")
+	if(equip_sound)
+		playsound(src, equip_sound, EQUIP_SOUND_VOLUME)
+	else
+		playsound(src, drop_sound, DROP_SOUND_VOLUME)
+	update_clothing_icon()
+
 /obj/item/clothing/wrists/watch/silver
 	desc = "It's a GaussIo ZeitMeister, a finely tuned wristwatch encased in silver."
 	desc_extended = "To unleash the telemarketer in you!"
@@ -51,7 +80,14 @@
 	slot_flags = SLOT_WRISTS | SLOT_BELT | SLOT_S_STORE
 	var/closed = FALSE
 
-/obj/item/clothing/wrists/watch/pocketwatch/AltClick(mob/user)
+/obj/item/clothing/wrists/watch/pocketwatch/mechanics_hints(mob/user, distance, is_adjacent)
+	. = ..()
+	. += "While \the [src] is in your inventory, you can <b>Ctrl-Click</b> to [closed ? "open" : "close"] its lid."
+
+/obj/item/clothing/wrists/watch/pocketwatch/CtrlClick(mob/user)
+	if(!(src in user)) // if it's not in our inventory then act normal
+		return ..()
+
 	if(!closed)
 		icon_state = "[initial(icon_state)]_closed"
 		item_state = "[initial(icon_state)]_closed"
@@ -96,8 +132,8 @@
 
 	if(wired && screwed)
 		to_chat(usr, SPAN_NOTICE("You check your watch, spotting a digital collection of numbers reading '[worldtime2text()]'. Today's date is '[time2text(world.time, "Month DD")]. [GLOB.game_year]'."))
-		if (GLOB.evacuation_controller.get_status_panel_eta())
-			to_chat(usr, SPAN_WARNING("Time until Bluespace Jump: [GLOB.evacuation_controller.get_status_panel_eta()]."))
+		if(GLOB.evacuation_controller.get_status_panel_eta())
+			to_chat(usr, SPAN_WARNING("Time until shift end: [GLOB.evacuation_controller.get_status_panel_eta()]."))
 	else if(wired && !screwed)
 		to_chat(usr, SPAN_NOTICE("You check your watch, realising it's still open."))
 	else
@@ -116,7 +152,7 @@
 		usr.visible_message (SPAN_NOTICE("<b>[usr]</b> taps their foot on the floor, arrogantly pointing at the [src] on their wrist with a look of derision in their eyes, not noticing it's broken."), SPAN_NOTICE("You point down at the [src] with an arrogant look about your eyes."))
 
 /obj/item/clothing/wrists/watch/attackby(obj/item/attacking_item, mob/user)
-	if(attacking_item.isscrewdriver())
+	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
 		user.visible_message(SPAN_NOTICE("<b>[user]</b> [screwed ? "unscrews" : "screws"] the cover of the [src] [screwed ? "open" : "closed"]."),
 							SPAN_NOTICE("You [screwed ? "unscrews" : "screws"] the cover of the [src] [screwed ? "open" : "closed"]."))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -124,7 +160,7 @@
 		return
 	if(wired)
 		return
-	if(attacking_item.iscoil())
+	if(attacking_item.tool_behaviour == TOOL_CABLECOIL)
 		var/obj/item/stack/cable_coil/C = attacking_item
 		if(screwed)
 			to_chat(user, SPAN_NOTICE("The [src] is not open."))

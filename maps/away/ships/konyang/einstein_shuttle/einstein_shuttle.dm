@@ -81,7 +81,7 @@
 	fore_dir = SOUTH
 	use_mapped_z_levels = TRUE
 
-/obj/machinery/computer/shuttle_control/explore/einstein_shuttle
+/obj/structure/machinery/computer/shuttle_control/explore/einstein_shuttle
 	name = "shuttle control console"
 	shuttle_tag = "Einstein Shuttle"
 	req_access = list(ACCESS_EE_SPY_SHIP)
@@ -137,7 +137,7 @@
 
 	id = /obj/item/card/id/einstein
 
-	l_ear = /obj/item/device/radio/headset/ship
+	l_ear = /obj/item/radio/headset/ship
 
 	backpack_contents = list(/obj/item/storage/box/survival = 1)
 

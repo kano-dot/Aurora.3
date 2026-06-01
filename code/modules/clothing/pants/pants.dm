@@ -40,49 +40,34 @@ ABSTRACT_TYPE(/obj/item/clothing/pants)
 		var/mob/M = src.loc
 		M.update_inv_pants()
 
+/obj/item/clothing/pants/AltClick(mob/user)
+	if(use_check_and_message(user))
+		return
+
+	handle_change_layer(user)
+
 /obj/item/clothing/pants/verb/change_layer()
 	set category = "Object.Equipped"
 	set name = "Change Pants Layer"
 	set src in usr
 
+	handle_change_layer(usr)
+
+/obj/item/clothing/pants/proc/handle_change_layer(mob/user)
 	var/list/options = list("Under Uniform" = UNDER_UNIFORM_LAYER_PA, "Over Uniform" = ABOVE_UNIFORM_LAYER_PA, "Over Suit" = ABOVE_SUIT_LAYER_PA)
-	var/new_layer = tgui_input_list(usr, "Position Pants", "Pants Layer", options)
+	var/new_layer = tgui_input_list(user, "Position Pants", "Pants Layer", options)
 	if(new_layer)
 		mob_wear_layer = options[new_layer]
-		to_chat(usr, SPAN_NOTICE("\The [src] will now layer [new_layer]."))
+		to_chat(user, SPAN_NOTICE("\The [src] will now layer [new_layer]."))
 		update_clothing_icon()
 
 /********** Pants Start **********/
 // Pants
-/obj/item/clothing/pants/white
-	name = "white pants"
-	desc = "Plain boring white pants."
-	icon_state = "whitepants"
-	item_state = "whitepants"
-
 /obj/item/clothing/pants/black
 	name = "black pants"
 	desc = "A pair of plain black pants."
 	icon_state = "blackpants"
 	item_state = "blackpants"
-
-/obj/item/clothing/pants/red
-	name = "red pants"
-	desc = "Bright red pants."
-	icon_state = "redpants"
-	item_state = "redpants"
-
-/obj/item/clothing/pants/tan
-	name = "tan pants"
-	desc = "Some tan pants. You look like a white collar worker with these on."
-	icon_state = "tanpants"
-	item_state = "tanpants"
-
-/obj/item/clothing/pants/khaki
-	name = "tan pants"
-	desc = "A pair of dust beige khaki pants."
-	icon_state = "khaki"
-	item_state = "khaki"
 
 /obj/item/clothing/pants/camo
 	name = "camouflage pants"
@@ -99,8 +84,14 @@ ABSTRACT_TYPE(/obj/item/clothing/pants)
 /obj/item/clothing/pants/dress/belt
 	name = "dress pants"
 	desc = "A pair of suit trousers. Comes with a belt, to secure your burdens."
-	icon_state = "dresspants_belt"
-	item_state = "dresspants_belt"
+	build_from_parts = TRUE
+	worn_overlay = "belt"
+
+/obj/item/clothing/pants/cargo
+	name = "cargo pants"
+	desc = "A pair of pants with large pockets."
+	icon_state = "cargopants"
+	item_state = "cargopants"
 
 /obj/item/clothing/pants/striped
 	name = "striped pants"

@@ -1,7 +1,7 @@
 /obj/item/ipc_tag_scanner
 	name = "IPC tag scanner"
 	desc = "A hand-held IPC tag scanner, that, when used to analyze the info of an IPC, will output its tag status and information."
-	icon = 'icons/obj/ipc_utilities.dmi'
+	icon = 'icons/obj/item/scanner.dmi'
 	icon_state = "ipc_tag_scanner"
 	item_state = "ipc_tag_scanner"
 	contained_sprite = TRUE
@@ -50,7 +50,7 @@
 		to_chat(user, SPAN_NOTICE("<b>Citizenship Info:</b> [tag.citizenship_info]"))
 
 /obj/item/ipc_tag_scanner/attackby(obj/item/attacking_item, mob/user)
-	if(attacking_item.isscrewdriver())
+	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
 		wires_exposed = !wires_exposed
 		user.visible_message(SPAN_WARNING("\The [user] [wires_exposed ? "exposes the wiring" : "closes the panel"] on \the [src]."), SPAN_WARNING("You [wires_exposed ? "expose the wiring" : "close the panel"] on \the [src]."), 3)
 	else if(wires_exposed)

@@ -45,7 +45,9 @@
 
 /obj/item/card/id/syndicate/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
-	unset_registered_user(registered_user)
+	if(registered_user)
+		UnregisterSignal(registered_user, COMSIG_QDELETING)
+		registered_user = null
 	return ..()
 
 /obj/item/card/id/syndicate/process()
@@ -177,8 +179,11 @@
 			if(!isnull(newName))
 				if(newName == "")
 					newName = initial(name)
+					registered_name = initial(registered_name)
 				else
 					name = newName
+					registered_name = newName
+					update_name()
 				to_chat(user, SPAN_NOTICE("Name has been set to '[name]'."))
 		if("setAge")
 			var/newAge = params["age"]

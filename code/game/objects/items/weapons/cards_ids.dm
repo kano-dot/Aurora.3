@@ -183,8 +183,10 @@
 /obj/item/card/id/Destroy()
 	QDEL_NULL(chat_user)
 	mob_id = null
-	. = ..()
-	GC_TEMPORARY_HARDDEL
+	access = null
+	front = null
+	side = null
+	return ..()
 
 /obj/item/card/id/examine(mob/user, distance, is_adjacent, infix, suffix, show_extended)
 	. = ..()

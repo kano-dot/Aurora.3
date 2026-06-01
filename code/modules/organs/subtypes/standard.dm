@@ -16,7 +16,7 @@
 	artery_name = "internal thoracic artery"
 	dislocated = -1
 	gendered_icon = 1
-	limb_flags = ORGAN_CAN_BREAK
+	limb_flags = ORGAN_CAN_BREAK | ORGAN_HEALS_OVERKILL
 	parent_organ = null
 	encased = "ribcage"
 	augment_limit = 3
@@ -194,12 +194,11 @@
 
 /obj/item/organ/external/hand/is_malfunctioning()
 	. = ..()
-	if(!.)
-		if(owner.is_mechanical())
-			var/actuator_type = limb_name == BP_L_HAND ? BP_ACTUATORS_LEFT : BP_ACTUATORS_RIGHT
-			var/obj/item/organ/internal/machine/actuators/actuator = owner.internal_organs_by_name[actuator_type]
-			if(!actuator || (actuator.status & ORGAN_DEAD))
-				return TRUE
+	if(!. && owner?.is_mechanical())
+		var/actuator_type = limb_name == BP_L_HAND ? BP_ACTUATORS_LEFT : BP_ACTUATORS_RIGHT
+		var/obj/item/organ/internal/machine/actuators/actuator = owner.internal_organs_by_name[actuator_type]
+		if(!actuator || (actuator.status & ORGAN_DEAD))
+			return TRUE
 
 /obj/item/organ/external/hand/take_damage(brute, burn, damage_flags, used_weapon, list/forbidden_limbs, silent)
 	. = ..()
@@ -240,6 +239,7 @@
 	gendered_icon = 1
 	encased = "skull"
 	augment_limit = 3
+	limb_flags = ORGAN_CAN_AMPUTATE | ORGAN_CAN_BREAK | ORGAN_CAN_MAIM | ORGAN_HEALS_OVERKILL
 	var/can_intake_reagents = 1
 
 /obj/item/organ/external/head/body_part_class()

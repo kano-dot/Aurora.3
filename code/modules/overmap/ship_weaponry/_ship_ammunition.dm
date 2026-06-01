@@ -4,7 +4,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "nuke"
 	w_class = WEIGHT_CLASS_HUGE
-	slowdown = 2
+	slowdown = 1
 	drop_sound = 'sound/items/drop/shell_drop.ogg'
 	var/projectile_type_override //Override projectile type fired by the gun. This is because certain guns don't use ammo (the Leviathan) but with some we want the ammo to matter.
 	var/overmap_projectile_type_override //Override projectile type on the overmap, fired by the gun. Like the Grauwolf Probe.
@@ -69,7 +69,7 @@
 		log_and_message_admins("[user] has caused the cookoff of [src] by attacking it with [attacking_item]!", user)
 		cookoff(FALSE)
 
-	else if(attacking_item.ispen())
+	else if(attacking_item.tool_behaviour == TOOL_PEN)
 		var/obj/item/pen/P = attacking_item
 		if(!use_check_and_message(user))
 			var/friendly_message = sanitizeSafe( tgui_input_text(user, "What do you want to write on \the [src]?", "Personal Message", "", 32), 32 )
@@ -138,7 +138,7 @@
 /obj/item/ship_ammunition/proc/update_status()
 	return
 
-/obj/item/ship_ammunition/proc/eject_shell(var/obj/machinery/ship_weapon/SW) //do cool casing ejection effects here
+/obj/item/ship_ammunition/proc/eject_shell(var/obj/structure/machinery/ship_weapon/SW) //do cool casing ejection effects here
 	return
 
 /obj/item/ship_ammunition/proc/wield(var/mob/living/carbon/human/user)
@@ -224,6 +224,8 @@
 	anti_materiel_potential = 3
 	impact_sounds = list(BULLET_IMPACT_MEAT = SOUNDS_BULLET_MEAT, BULLET_IMPACT_METAL = SOUNDS_BULLET_METAL)
 	accuracy = 100
+	projectile_piercing = PASSMOB|PASSDOORS|PASSGLASS|PASSCLOSEDTURF|PASSWINDOW|PASSMACHINE|PASSBLOB|PASSFLAPS|PASSVEHICLE //It's a ship weapon let it try to penetrate everything.
+	pierce_decay_damage = 0.95  //Ship weapon projectiles don't lose much damage on pierce by default, but this can be set per projectile.
 	var/obj/item/ship_ammunition/ammo
 	var/primed = FALSE
 	var/hit_target = FALSE //First target we hit. Used to report if a hit was successful.

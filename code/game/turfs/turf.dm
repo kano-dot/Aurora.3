@@ -300,9 +300,16 @@
 		else
 			step(user.pulling, get_dir(user.pulling.loc, src))
 
-	. = handle_hand_interception(user)
-	if (!.)
-		return TRUE
+	// Check if objects in the turf want to intercept the click.
+	var/datum/component/turf_hand/best_interceptor
+	for(var/atom/A in src)
+		var/datum/component/turf_hand/TH = A.GetComponent(/datum/component/turf_hand)
+		if(TH && (!best_interceptor || TH.priority > best_interceptor.priority))
+			best_interceptor = TH
+
+	if(best_interceptor)
+		best_interceptor.OnHandInterception(user)
+
 	return TRUE
 
 /// Call to move a turf from its current area to a new one
@@ -327,8 +334,8 @@
 
 		if(is_new_area_valid)
 			new_area.Entered(AM)
-			if(istype(AM, /obj/machinery))
-				var/obj/machinery/M = AM
+			if(istype(AM, /obj/structure/machinery))
+				var/obj/structure/machinery/M = AM
 				M.shuttle_move(src)
 
 	last_outside_check = OUTSIDE_UNCERTAIN
@@ -342,16 +349,6 @@
 /// Allows for reactions to an area change without inherently requiring change_area() be called (I hate maploading)
 /turf/proc/on_change_area(area/old_area, area/new_area)
 	transfer_area_lighting(old_area, new_area)
-
-/turf/proc/handle_hand_interception(var/mob/user)
-	var/datum/component/turf_hand/THE
-	for (var/atom/A in src)
-		var/datum/component/turf_hand/TH = A.GetComponent(/datum/component/turf_hand)
-		if (istype(TH) && TH.priority > THE?.priority) //Only overwrite if the new one is higher. For matching values, its first come first served
-			THE = TH
-
-	if (THE)
-		return THE.OnHandInterception(user)
 
 // /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 // 	if(movement_disabled && usr.ckey != movement_disabled_exception)
@@ -576,7 +573,7 @@
 	if(istype(attacking_item, /obj/item/grab))
 		var/obj/item/grab/grab = attacking_item
 		step(grab.affecting, get_dir(grab.affecting, src))
-	if (can_lay_cable() && attacking_item.iscoil())
+	if (can_lay_cable() && attacking_item.tool_behaviour == TOOL_CABLECOIL)
 		var/obj/item/stack/cable_coil/coil = attacking_item
 		coil.turf_place(src, user)
 	else
@@ -724,11 +721,10 @@
 	var/static/list/allowed = typecacheof(list(
 		/obj/structure/table,
 		/obj/structure/closet,
-		/obj/machinery/constructable_frame,
 		/obj/structure/target_stake,
 		/obj/structure/cable,
 		/obj/structure/disposalpipe,
-		/obj/machinery,
+		/obj/structure/machinery,
 		/mob
 	))
 
@@ -745,7 +741,7 @@
 				if(!O.density)
 					add = 1
 					break
-				if(istype(O, /obj/machinery/door))
+				if(istype(O, /obj/structure/machinery/door))
 					//not sure why this doesn't fire on LinkBlocked()
 					add = 0
 					break
@@ -858,3 +854,6 @@
 		if(istype(O,/obj/effect/rune) || istype(O,/obj/effect/decal/cleanable))
 			qdel(O)
 	clean_blood()
+
+/turf/proc/IgniteTurf(power, fire_color)
+	return

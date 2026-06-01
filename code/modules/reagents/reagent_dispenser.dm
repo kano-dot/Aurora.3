@@ -65,7 +65,7 @@
 			else
 				to_chat(user,SPAN_NOTICE("The inlet cap on \the [src] is wrenched on tight!"))
 
-	if (attacking_item.iswrench())
+	if (attacking_item.tool_behaviour == TOOL_WRENCH)
 		if(use_check(user, USE_DISALLOW_SPECIALS))
 			to_chat(user, SPAN_WARNING("A strange force prevents you from doing this.")) //there is no way to justify this icly
 			return
@@ -129,7 +129,7 @@
 	amount_per_transfer_from_this = 30
 	var/defuse = 0
 	var/armed = 0
-	var/obj/item/device/assembly_holder/rig = null
+	var/obj/item/assembly_holder/rig = null
 	reagents_to_add = list(/singleton/reagent/fuel = 1000)
 
 /obj/structure/reagent_dispensers/fueltank/feedback_hints(mob/user, distance, is_adjacent)
@@ -162,7 +162,7 @@
 		user.put_in_hands(rig)
 		rig = null
 		overlays = new/list()
-	if (istype(attacking_item,/obj/item/device/assembly_holder))
+	if (istype(attacking_item,/obj/item/assembly_holder))
 		if (rig)
 			to_chat(user, SPAN_WARNING("There is another device in the way."))
 			return ..()
@@ -171,8 +171,8 @@
 			user.visible_message(SPAN_NOTICE("[user] rigs [attacking_item] to \the [src]."),
 									SPAN_NOTICE("You rig [attacking_item] to \the [src]"))
 
-			var/obj/item/device/assembly_holder/H = attacking_item
-			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))
+			var/obj/item/assembly_holder/H = attacking_item
+			if (istype(H.a_left,/obj/item/assembly/igniter) || istype(H.a_right,/obj/item/assembly/igniter))
 				message_admins("[key_name_admin(user)] rigged fueltank at [loc.loc.name] ([loc.x],[loc.y],[loc.z]) for explosion. (<A href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>JMP</a>)")
 				log_game("[key_name(user)] rigged fueltank at [loc.loc.name] ([loc.x],[loc.y],[loc.z]) for explosion.")
 
@@ -225,10 +225,10 @@
 
 	..()
 
-/obj/structure/reagent_dispensers/fueltank/fire_act(temperature, volume)
+/obj/structure/reagent_dispensers/fueltank/fire_act(exposed_temperature, exposed_volume)
 	if (is_leaking)
 		ex_act(2.0)
-	else if (temperature > T0C+500)
+	else if (exposed_temperature > T0C+500)
 		ex_act(2.0)
 	return ..()
 
@@ -323,7 +323,7 @@
 	return "[src]'s cup dispenser is empty."
 
 /obj/structure/reagent_dispensers/water_cooler/attackby(obj/item/attacking_item, mob/user)
-	if (attacking_item.isscrewdriver())
+	if (attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
 		src.add_fingerprint(user)
 		attacking_item.play_tool_sound(get_turf(src), 100)
 		if(do_after(user, 20))
@@ -468,9 +468,10 @@
 
 /obj/structure/reagent_dispensers/acid_barrel
 	name = "chemical barrel"
-	desc = "A metal barrel containing some unknown chemical."
+	desc = "A metal barrel filled with deadly sulfuric acid."
 	icon_state = "acid_barrel"
 	amount_per_transfer_from_this = 300
+	reagents_to_add = list(/singleton/reagent/acid = 1000)
 
 /obj/structure/reagent_dispensers/radioactive_waste
 	name = "radioactive waste barrel"
@@ -500,34 +501,42 @@ ABSTRACT_TYPE(/obj/structure/reagent_dispensers/radioactive_waste/hazardous)
 	. += "Characters directly adjacent to this object will be exposed to <b>[radioactivity] IU/s</b> of radiation. Radiation falls off (approximately) by 75% for every tile away you move."
 
 /obj/structure/reagent_dispensers/radioactive_waste/hazardous/low
-	radioactivity = 25
+	radioactivity = RAD_LEVEL_LOW
 
 /obj/structure/reagent_dispensers/radioactive_waste/hazardous/low/antagonist_hints(mob/user, distance, is_adjacent)
 	. += ..()
-	. += "Geiger counters will start clicking at ~7 tiles away from this object."
+	. += "Geiger counters will start clicking at ~3 tiles away from this object."
 	. += "Almost all voidsuits, including softsuits, provide sufficient protection to move safely adjacent to it."
 
 /obj/structure/reagent_dispensers/radioactive_waste/hazardous/medium
-	radioactivity = 50
+	radioactivity = RAD_LEVEL_MODERATE
 
 /obj/structure/reagent_dispensers/radioactive_waste/hazardous/medium/antagonist_hints(mob/user, distance, is_adjacent)
-	. += "Geiger counters will start clicking at ~9 tiles away from this object."
+	. += "Geiger counters will start clicking at ~5 tiles away from this object."
 	. += "An engineering voidsuit is necessary to move safely adjacent to it."
 
 /obj/structure/reagent_dispensers/radioactive_waste/hazardous/high
 	/// This is as high as radsuits can absorb! Use with caution.
-	radioactivity = 100
+	radioactivity = RAD_LEVEL_HIGH
 
 /obj/structure/reagent_dispensers/radioactive_waste/hazardous/high/antagonist_hints(mob/user, distance, is_adjacent)
+	. += "Geiger counters will start clicking at ~7 tiles away from this object."
+	. += "A radsuit is necessary to move safely adjacent to it."
+
+/obj/structure/reagent_dispensers/radioactive_waste/hazardous/very_high
+	/// This is as high as radsuits can absorb! Use with caution.
+	radioactivity = RAD_LEVEL_VERY_HIGH
+
+/obj/structure/reagent_dispensers/radioactive_waste/hazardous/very_high/antagonist_hints(mob/user, distance, is_adjacent)
 	. += "Geiger counters will start clicking at ~11 tiles away from this object."
 	. += "A radsuit is necessary to move safely adjacent to it."
 
 /obj/structure/reagent_dispensers/radioactive_waste/hazardous/extreme
 	/// This is higher than radsuits can absorb! Use with caution.
-	radioactivity = 150
+	radioactivity = RAD_LEVEL_CATASTROPHIC
 
 /obj/structure/reagent_dispensers/radioactive_waste/hazardous/extreme/antagonist_hints(mob/user, distance, is_adjacent)
-	. += "Geiger counters will start clicking at ~13 tiles away from this object."
+	. += "Geiger counters will start clicking at ~11 tiles away from this object."
 	. += "No living thing can safely stand next to this object! Borgs or IPCs only!"
 
 /obj/structure/reagent_dispensers/radioactive_waste/hazardous/Initialize()

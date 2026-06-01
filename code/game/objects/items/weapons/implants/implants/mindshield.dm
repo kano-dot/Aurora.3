@@ -42,23 +42,24 @@
 	return TRUE
 
 /obj/item/implant/mindshield/removed()
-	. = ..()
 	if(!imp_in)
-		return
+		return ..()
 
 	UnregisterSignal(imp_in, COMSIG_PSI_CHECK_SENSITIVITY)
 	UnregisterSignal(imp_in, COMSIG_PSI_MIND_POWER)
+	return ..()
 
 /obj/item/implant/mindshield/proc/modify_sensitivity(var/implantee, var/effective_sensitivity)
 	SIGNAL_HANDLER
 	*effective_sensitivity += sensitivity_modifier
 
-/obj/item/implant/mindshield/proc/cancel_power(var/implantee, var/caster, var/cancelled)
+/obj/item/implant/mindshield/proc/cancel_power(var/implantee, var/caster, var/cancelled, var/cancel_return, var/wide_field)
 	SIGNAL_HANDLER
 	*cancelled = TRUE
-	if(implantee == caster)
+	if(wide_field || implantee == caster)
 		return
 
+	*cancel_return = SPAN_DANGER("ACCESS DENIED: CONNECTION DROPPED.")
 	to_chat(implantee, SPAN_DANGER("Your [name] buzzes angrily."))
 
 /obj/item/implant/mindshield/emp_act(severity)

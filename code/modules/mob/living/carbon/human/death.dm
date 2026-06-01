@@ -28,6 +28,8 @@
 	if(stat == DEAD)
 		return
 
+	to_chat(src, EXAMINE_BLOCK_RED(SPAN_DANGER(FONT_LARGE("<i>You have died.</i>"))))
+
 	vr_disconnect()
 
 	BITSET(hud_updateflag, HEALTH_HUD)
@@ -109,9 +111,9 @@
 
 	var/datum/sprite_accessory/hair/hair = GLOB.hair_styles_list[h_style]
 	var/datum/sprite_accessory/facial_hair/facial = GLOB.facial_hair_styles_list[f_style]
-	if(!facial.keep_as_skeleton && f_style)
+	if(facial && !facial.keep_as_skeleton)
 		f_style = "Shaved"
-	if(!hair.keep_as_skeleton && h_style)
+	if(hair && !hair.keep_as_skeleton)
 		h_style = "Bald"
 	update_hair(0)
 

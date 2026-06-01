@@ -98,7 +98,7 @@
 			Stun(2)
 
 		//Being hit while using a deadman switch
-		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
+		var/obj/item/assembly/signaler/signaler = get_active_hand()
 		if(istype(signaler))
 			if(signaler.deadman && prob(80))
 				log_and_message_admins("has triggered a signaler deadman's switch")
@@ -442,14 +442,19 @@
 		fire_stacks = min(0, ++fire_stacks) //If we've doused ourselves in water to avoid fire, dry off slowly
 
 	if(!on_fire)
-		return 1
+		return TRUE
+
+	// If we're dead, slowly put out the fire.
+	if(((stat & DEAD) || (status_flags & FAKEDEATH)) && fire_stacks > 0 )
+		fire_stacks--
+
 	else if(fire_stacks <= 0)
 		ExtinguishMobCompletely() //Fire's been put out.
-		return 1
+		return TRUE
 
 	if(environment.gas[GAS_OXYGEN] < 1)
 		ExtinguishMobCompletely() //If there's no oxygen in the tile we're on, put out the fire
-		return 1
+		return TRUE
 
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(fire_burn_temperature(environment), 50, 1)

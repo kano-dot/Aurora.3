@@ -27,7 +27,7 @@
 
 	id = /obj/item/card/id/ssrm_ship
 
-	l_ear = /obj/item/device/radio/headset/ship
+	l_ear = /obj/item/radio/headset/ship
 
 	backpack_contents = list(/obj/item/storage/box/survival = 1, /obj/item/melee/energy/sword/knife/sol = 1)
 
@@ -64,7 +64,7 @@
 
 	id = /obj/item/card/id/ssrm_ship
 
-	l_ear = /obj/item/device/radio/headset/ship
+	l_ear = /obj/item/radio/headset/ship
 
 	backpack_contents = list(/obj/item/storage/box/survival = 1, /obj/item/melee/energy/sword/knife/sol = 1)
 
@@ -91,9 +91,14 @@
 	name = "Sol Navy Recon Chief Petty Officer"
 
 	uniform = /obj/item/clothing/under/rank/sol/dress/pettyofficer
-	shoes = /obj/item/clothing/shoes/laceup
-	back = /obj/item/storage/backpack/satchel/leather
-	head = /obj/item/clothing/head/sol/dress
+	shoes = /obj/item/clothing/shoes/jackboots
+	back = /obj/item/storage/backpack/satchel
+	head = /obj/item/clothing/head/sol
+
+	id = /obj/item/card/id/ssrm_ship
+
+/obj/outfit/admin/ssrm_navy_chief_petty_officer/get_id_access()
+	return list(ACCESS_SOL_SHIPS, ACCESS_EXTERNAL_AIRLOCKS)
 
 /datum/ghostspawner/human/ssrm_marine_pilot
 	short_name = "ssrm_marine_pilot"
@@ -125,7 +130,7 @@
 
 	id = /obj/item/card/id/ssrm_ship
 
-	l_ear = /obj/item/device/radio/headset/ship
+	l_ear = /obj/item/radio/headset/ship
 
 	backpack_contents = list(/obj/item/storage/box/survival = 1, /obj/item/melee/energy/sword/knife/sol = 1)
 
@@ -161,7 +166,7 @@
 
 	id = /obj/item/card/id/ssrm_ship
 
-	l_ear = /obj/item/device/radio/headset/ship
+	l_ear = /obj/item/radio/headset/ship
 
 	backpack_contents = list(/obj/item/storage/box/survival = 1, /obj/item/melee/energy/sword/knife/sol = 1)
 

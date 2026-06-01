@@ -5,7 +5,7 @@ ABSTRACT_TYPE(/datum/gear/pants)
 /datum/gear/pants/trousers
 	display_name = "pants and shorts selection"
 	description = "A selection of pants and shorts."
-	path = /obj/item/clothing/pants
+	path = /obj/item/clothing/pants/black
 
 /datum/gear/pants/trousers/New()
 	..()
@@ -16,11 +16,7 @@ ABSTRACT_TYPE(/datum/gear/pants)
 	pants["classic jeans"] = /obj/item/clothing/pants/classic
 	pants["mustang jeans"] = /obj/item/clothing/pants/mustang
 	pants["black jeans"] = /obj/item/clothing/pants/jeansblack
-	pants["white pants"] = /obj/item/clothing/pants/white
 	pants["black pants"] = /obj/item/clothing/pants/black
-	pants["red pants"] = /obj/item/clothing/pants/red
-	pants["tan pants"] = /obj/item/clothing/pants/tan
-	pants["khaki pants"] = /obj/item/clothing/pants/khaki
 	pants["track pants"] = /obj/item/clothing/pants/track
 	pants["blue track pants"] = /obj/item/clothing/pants/track/blue
 	pants["green track pants"] = /obj/item/clothing/pants/track/green
@@ -35,8 +31,6 @@ ABSTRACT_TYPE(/datum/gear/pants)
 	// Shorts
 	pants["black shorts"] = /obj/item/clothing/pants/shorts/black
 	pants["black short shorts"] = /obj/item/clothing/pants/shorts/black/short
-	pants["khaki shorts"] = /obj/item/clothing/pants/shorts/khaki
-	pants["khaki short shorts"] = /obj/item/clothing/pants/shorts/khaki/short
 
 	// Jeans Shorts
 	pants["jeans shorts"] = /obj/item/clothing/pants/shorts/jeans
@@ -47,8 +41,6 @@ ABSTRACT_TYPE(/datum/gear/pants)
 	pants["mustang jeans short shorts"] = /obj/item/clothing/pants/shorts/jeans/mustang/short
 	pants["black jeans shorts"] = /obj/item/clothing/pants/shorts/jeans/black
 	pants["black jeans short shorts"] = /obj/item/clothing/pants/shorts/jeans/black/short
-	pants["grey jeans shorts"] = /obj/item/clothing/pants/shorts/jeans/grey
-	pants["grey jeans short shorts"] = /obj/item/clothing/pants/shorts/jeans/grey/short
 
 	// Athletic Shorts
 	pants["black athletic shorts"] = /obj/item/clothing/pants/shorts/athletic/black
@@ -72,6 +64,7 @@ ABSTRACT_TYPE(/datum/gear/pants)
 	// Pants
 	colorpants["dress pants"] = /obj/item/clothing/pants/dress
 	colorpants["dress pants, with belt"] = /obj/item/clothing/pants/dress/belt
+	colorpants["cargo pants"] = /obj/item/clothing/pants/cargo
 	colorpants["striped pants"] = /obj/item/clothing/pants/striped
 	colorpants["flared pants"] = /obj/item/clothing/pants/flared
 	colorpants["mustang jeans"] = /obj/item/clothing/pants/mustang/colourable

@@ -135,28 +135,32 @@
 //default attack_self behaviour
 /obj/item/clothing/accessory/attack_self(mob/user as mob)
 	if(flippable)
-		if(!flipped)
-			if(!overlay_state)
-				icon_state = "[initial(icon_state)]_flip"
-				item_state = "[initial(item_state)]_flip"
-				flipped = 1
-			else
-				overlay_state = "[overlay_state]_flip"
-				flipped = 1
-		else
-			if(!overlay_state)
-				icon_state = initial(icon_state)
-				item_state = initial(item_state)
-				flipped = 0
-			else
-				overlay_state = initial(overlay_state)
-				flipped = 0
+		flipped = !flipped
+		update_icon()
 		flip_message(user)
 		update_clothing_icon()
 		inv_overlay = null
 		accessory_mob_overlay = null
 		return
 	..()
+
+/obj/item/clothing/accessory/update_icon()
+	. = ..()
+	flip_sprite()
+
+/obj/item/clothing/accessory/proc/flip_sprite()
+	if(flipped)
+		if(!overlay_state)
+			icon_state = "[initial(icon_state)]_flip"
+			item_state = "[initial(item_state)]_flip"
+		else
+			overlay_state = "[overlay_state]_flip"
+	else
+		if(!overlay_state)
+			icon_state = initial(icon_state)
+			item_state = initial(item_state)
+		else
+			overlay_state = initial(overlay_state)
 
 /obj/item/clothing/accessory/proc/flip_message(mob/user)
 	to_chat(user, "You change \the [src] to be on your [src.flipped ? "right" : "left"] side.")
@@ -1228,7 +1232,7 @@
 	color = "#3429d1"
 	allowed = list(
 		/obj/item/reagent_containers/spray/plantbgone,
-		/obj/item/device/analyzer/plant_analyzer,
+		/obj/item/analyzer/plant_analyzer,
 		/obj/item/seeds,
 		/obj/item/reagent_containers/glass/fertilizer,
 		/obj/item/material/minihoe
@@ -1245,11 +1249,11 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/device/healthanalyzer,
-		/obj/item/device/flashlight,
-		/obj/item/device/radio,
+		/obj/item/healthanalyzer,
+		/obj/item/flashlight,
+		/obj/item/radio,
 		/obj/item/tank/emergency_oxygen,
-		/obj/item/device/breath_analyzer,
+		/obj/item/breath_analyzer,
 		/obj/item/reagent_containers/blood
 	)
 
@@ -1425,15 +1429,25 @@
 /obj/item/clothing/accessory/led_collar/Initialize()
 	. = ..()
 	color = pick("#00FFFF", "#FF0000", "#FF00FF", "#FF6600", "#CC00CC")
-	set_light_range_power_color(MINIMUM_USEFUL_LIGHT_RANGE, 1.2, color)
+	set_light_range_power_color(0.5, 0.4, color)
 	set_light_on(TRUE)
+
+/// Update the light mode to one used by accessories when it gets attached.
+/obj/item/clothing/accessory/led_collar/on_attached(obj/item/clothing/S, mob/user)
+	. = ..()
+	set_light_flags(LIGHT_ATTACHED)
+
+/// Clears LIGHT_ATTACHED tracking when the collar is detached from clothing.
+/obj/item/clothing/accessory/led_collar/on_removed(mob/user)
+	. = ..()
+	set_light_flags(NONE)
 
 /obj/item/clothing/accessory/led_collar/attack_self(mob/user)
 	. = ..()
 	var/new_color = input(user, "Select the color of \the [src]", "LED Collar Color Selection", color) as null|color
 	if(new_color)
 		color = new_color
-		set_light_range_power_color(MINIMUM_USEFUL_LIGHT_RANGE, 1.2, color)
+		set_light_range_power_color(0.5, 0.4, color)
 
 /obj/item/clothing/accessory/led_collar/get_accessory_mob_overlay(var/mob/living/carbon/human/H, var/force = FALSE)
 	var/image/I = ..()

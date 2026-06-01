@@ -240,12 +240,40 @@
 	groupable = TRUE
 	spawn_amount = 1
 
+/singleton/cargo_item/tricordrazine
+	category = "medical"
+	name = "tricordrazine bottle"
+	supplier = "nanotrasen"
+	description = "A bottle of tricordrazine, a medicine used to treat various wounds."
+	price = 175
+	items = list(
+		/obj/item/reagent_containers/glass/bottle/tricordrazine
+	)
+	access = 0
+	container_type = "crate"
+	groupable = TRUE
+	spawn_amount = 1
+
+/singleton/cargo_item/bicaridine_bottle
+	category = "medical"
+	name = "bicaridine bottle"
+	supplier = "nanotrasen"
+	description = "A bottle of bicaridine, a medicine used to treat trauma."
+	price = 250
+	items = list(
+		/obj/item/reagent_containers/glass/bottle/bicaridine
+	)
+	access = ACCESS_MEDICAL
+	container_type = "crate"
+	groupable = TRUE
+	spawn_amount = 1
+
 /singleton/cargo_item/butazoline_bottle
 	category = "medical"
 	name = "butazoline bottle"
-	supplier = "nanotrasen"
+	supplier = "zeng_hu"
 	description = "A bottle of butazoline, a medicine used to treat severe trauma."
-	price = 250
+	price = 525
 	items = list(
 		/obj/item/reagent_containers/glass/bottle/butazoline
 	)
@@ -258,12 +286,26 @@
 	category = "medical"
 	name = "kelotane bottle"
 	supplier = "nanotrasen"
-	description = "A bottle of kelotane, a medicine used to treat severe burns."
+	description = "A bottle of kelotane, a medicine used to treat burns."
 	price = 250
 	items = list(
 		/obj/item/reagent_containers/glass/bottle/kelotane
 	)
 	access = 0
+	container_type = "crate"
+	groupable = TRUE
+	spawn_amount = 1
+
+/singleton/cargo_item/dermaline_bottle
+	category = "medical"
+	name = "dermaline bottle"
+	supplier = "zeng_hu"
+	description = "A bottle of dermaline, a medicine used to treat severe burns."
+	price = 525
+	items = list(
+		/obj/item/reagent_containers/glass/bottle/dermaline
+	)
+	access = ACCESS_MEDICAL
 	container_type = "crate"
 	groupable = TRUE
 	spawn_amount = 1
@@ -328,7 +370,7 @@
 	category = "medical"
 	name = "mortaphenyl bottle"
 	supplier = "nanotrasen"
-	description = "A bottle of mortaphenyl, a strong non-opioid painkiller."
+	description = "A bottle of mortaphenyl, a weak, synthetic, opioid painkiller."
 	price = 455
 	items = list(
 		/obj/item/reagent_containers/glass/bottle/mortaphenyl
@@ -753,10 +795,18 @@
 	description = "An intravenous drip stand used for hooking up IV bags. It also features an emergency positive pressure system for breathing-compromised patients. Comes with a breath mask. Tank or IV bags not included."
 	price = 150
 	items = list(
-		/obj/machinery/iv_drip,
+		/obj/structure/machinery/iv_drip,
 		/obj/item/clothing/mask/breath/medical
 	)
 	access = ACCESS_MEDICAL
 	container_type = "crate"
 	groupable = TRUE
 	spawn_amount = 1
+
+/singleton/cargo_item/organcooler/mind_blanker
+	name = "mind blanker cooler"
+	description = "An organ cooler containing a single Zeng-Hu Mind Blanker. Their cost has been subsidized by ZH for Operation Deep Dive."
+	price = 500
+	items = list(
+		/obj/item/storage/box/unique/freezer/organcooler/mind_blanker
+	)

@@ -100,7 +100,7 @@
 	clear_important_client_contents()
 	enable_client_mobs_in_contents()
 
-	update_client_color()
+	update_client_color(no_animate = TRUE)
 	add_click_catcher()
 
 	if(client) //Should work based on "change_view" but we lack the infrastructure behind to make it useful, for now
@@ -119,3 +119,5 @@
 		for(var/atom/movable/screen/movable/spell_master/spell_master in spell_masters)
 			spell_master.toggle_open(1)
 			client.screen -= spell_master
+
+	SEND_SIGNAL(src, COMSIG_MOB_AFTER_LOGIN)

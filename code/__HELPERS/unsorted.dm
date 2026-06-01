@@ -213,9 +213,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(D.dir == SOUTHWEST)	return 1
 		if(D.dir == dir)		return 1
 
-	for(var/obj/machinery/door/D in loc)
+	for(var/obj/structure/machinery/door/D in loc)
 		if(!D.density)			continue
-		if(istype(D, /obj/machinery/door/window))
+		if(istype(D, /obj/structure/machinery/door/window))
 			if((dir & SOUTH) && (D.dir & (EAST|WEST)))		return 1
 			if((dir & EAST ) && (D.dir & (NORTH|SOUTH)))	return 1
 		else return 1	// it's a real, air blocking door
@@ -510,10 +510,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
 
-/// Makes sure MIDDLE is between LOW and HIGH. If not, it adjusts it. Returns the adjusted value.
-/proc/between(var/low, var/middle, var/high)
-	return max(min(middle, high), low)
-
 /// Returns random gauss number
 /proc/GaussRand(var/sigma)
 	var/x,y,rsq
@@ -786,24 +782,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(A.vars.Find(lowertext(varname))) return 1
 	else return 0
 
-/proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
-	if(!original)
-		return null
-
-	var/obj/O = null
-
-	if(sameloc)
-		O=new original.type(original.loc)
-	else
-		O=new original.type(locate(0,0,0))
-
-	if(perfectcopy)
-		if((O) && (original))
-			for(var/V in original.vars)
-				if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key")))
-					O.vars[V] = original.vars[V]
-	return O
-
 /proc/get_cardinal_dir(atom/A, atom/B)
 	var/dx = abs(B.x - A.x)
 	var/dy = abs(B.y - A.y)
@@ -914,7 +892,7 @@ GLOBAL_LIST_INIT(common_tools, list(
 	/obj/item/wirecutters,
 	/obj/item/powerdrill,
 	/obj/item/combitool,
-	/obj/item/device/multitool,
+	/obj/item/multitool,
 	/obj/item/crowbar))
 
 /proc/istool(O)
@@ -982,7 +960,7 @@ GLOBAL_LIST_INIT(common_tools, list(
 /proc/can_operate(mob/living/carbon/M) //If it's 2, commence surgery, if it's 1, fail surgery, if it's 0, attack
 	var/surgery_attempt = SURGERY_IGNORE
 	var/located = FALSE
-	if(locate(/obj/machinery/optable, M.loc))
+	if(locate(/obj/structure/machinery/optable, M.loc))
 		located = TRUE
 		surgery_attempt = SURGERY_SUCCESS
 	else if(locate(/obj/structure/bed/roller, M.loc))
@@ -1003,26 +981,26 @@ GLOBAL_LIST_INIT(common_tools, list(
 
 /// Checks if that loc and dir has a item on the wall
 GLOBAL_LIST_INIT(wall_items, typecacheof(list(
-	/obj/machinery/power/apc,
-	/obj/machinery/alarm,
-	/obj/item/device/radio/intercom,
+	/obj/structure/machinery/power/apc,
+	/obj/structure/machinery/alarm,
+	/obj/item/radio/intercom,
 	/obj/structure/extinguisher_cabinet,
 	/obj/structure/reagent_dispensers/peppertank,
-	/obj/machinery/status_display,
-	/obj/machinery/requests_console,
-	/obj/machinery/light_switch,
-	/obj/machinery/newscaster,
-	/obj/machinery/firealarm,
+	/obj/structure/machinery/status_display,
+	/obj/structure/machinery/requests_console,
+	/obj/structure/machinery/light_switch,
+	/obj/structure/machinery/newscaster,
+	/obj/structure/machinery/firealarm,
 	/obj/structure/noticeboard,
-	/obj/machinery/computer/security/telescreen,
-	/obj/machinery/embedded_controller/radio/airlock,
+	/obj/structure/machinery/computer/security/telescreen,
+	/obj/structure/machinery/embedded_controller/radio/airlock,
 	/obj/item/storage/secure/safe,
-	/obj/machinery/door_timer,
-	/obj/machinery/flasher,
-	/obj/machinery/keycard_auth,
+	/obj/structure/machinery/door_timer,
+	/obj/structure/machinery/flasher,
+	/obj/structure/machinery/keycard_auth,
 	/obj/structure/mirror,
 	/obj/structure/fireaxecabinet,
-	/obj/machinery/computer/security/telescreen/entertainment,
+	/obj/structure/machinery/computer/security/telescreen/entertainment,
 	/obj/structure/sign
 )))
 
@@ -1250,3 +1228,18 @@ GLOBAL_LIST_INIT(wall_items, typecacheof(list(
 
 	if(final_x || final_y)
 		return locate(final_x, final_y, T.z)
+
+/**
+ * Basically just transforms the ROLL_RESULT defines into text.
+ */
+/proc/roll_result_text(roll)
+	switch(roll)
+		if(ROLL_RESULT_CRITICAL_SUCCESS)
+			return "critical success"
+		if(ROLL_RESULT_SUCCESS)
+			return "success"
+		if(ROLL_RESULT_FAILURE)
+			return "failure"
+		if(ROLL_RESULT_CRITICAL_FAILURE)
+			return "critical failure"
+	crash_with("Roll result given invalid roll: [roll]")

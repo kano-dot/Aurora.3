@@ -13,7 +13,7 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 	//Handle temperature/pressure differences between body and environment
 	if(environment)
-		handle_environment(environment)
+		handle_environment(environment, seconds_per_tick)
 
 	blinded = 0 // Placing this here just show how out of place it is.
 
@@ -25,7 +25,7 @@
 			aura_check(AURA_TYPE_LIFE)
 		if(!InStasis())
 			//Mutations and radiation
-			handle_mutations_and_radiation()
+			handle_mutations_and_radiation(seconds_per_tick)
 
 	//Check if we're on fire
 	handle_fire(seconds_per_tick, environment)
@@ -52,10 +52,10 @@
 /mob/living/proc/handle_breathing()
 	return
 
-/mob/living/proc/handle_mutations_and_radiation()
+/mob/living/proc/handle_chemicals_in_body()
 	return
 
-/mob/living/proc/handle_chemicals_in_body()
+/mob/living/proc/handle_mutations_and_radiation(seconds_per_tick)
 	return
 
 /mob/living/proc/handle_random_events()
@@ -213,14 +213,15 @@
 	if(!.) // If we're under or inside shelter, use the z-level rain (for ambience)
 		. = SSweather.weather_by_z["[my_turf.z]"]
 
-/mob/living/proc/handle_environment(var/datum/gas_mixture/environment)
+/mob/living/proc/handle_environment(var/datum/gas_mixture/environment, seconds_per_tick)
 
 	SHOULD_CALL_PARENT(TRUE)
 
 	// Handle physical effects of weather.
 	var/singleton/state/weather/weather_state
 	var/obj/abstract/weather_system/weather = get_affecting_weather()
-	if(weather)
+	if(weather_cooldown_time <= world.time && weather)
+		weather_cooldown_time = world.time + WEATHER_COOLDOWN_TIME
 		weather_state = weather.weather_system.current_state
 		if(istype(weather_state))
 			weather_state.handle_exposure(src, get_weather_exposure(weather), weather)

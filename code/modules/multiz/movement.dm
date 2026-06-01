@@ -99,7 +99,7 @@
 
 /mob/living/zMove(direction)
 	if (is_ventcrawling)
-		var/obj/machinery/atmospherics/pipe/zpipe/P = loc
+		var/obj/structure/machinery/atmospherics/pipe/zpipe/P = loc
 		if (istype(P) && P.can_z_crawl(src, direction))
 			return P.handle_z_crawl(src, direction)
 
@@ -230,7 +230,7 @@
 	return 1
 
 /mob/living/silicon/robot/can_ztravel(var/direction)
-	if(incapacitated() || is_dead())
+	if(incapacitated() || (stat == DEAD))
 		return FALSE
 
 	if(Allow_Spacemove()) //Checks for active jetpack
@@ -332,7 +332,7 @@
 /obj/item/pipe/can_fall(turf/below, turf/simulated/open/dest = src.loc)
 	. = ..()
 
-	if((locate(/obj/structure/disposalpipe/up) in below) || (locate(/obj/machinery/atmospherics/pipe/zpipe/up) in below))
+	if((locate(/obj/structure/disposalpipe/up) in below) || (locate(/obj/structure/machinery/atmospherics/pipe/zpipe/up) in below))
 		return FALSE
 
 /mob/can_fall()
