@@ -21,7 +21,7 @@
 
 	exoplanet_atmospheres = list(/datum/gas_mixture/earth_hot)
 	exoplanet_lightlevel = list(5)
-	exoplanet_lightcolor = list("#e68831")
+	exoplanet_lightcolor = list("#e7b079")
 
 /singleton/submap_archetype/desolate_fortress
 	map = "Desolate Fortress"

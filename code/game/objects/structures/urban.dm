@@ -564,6 +564,47 @@ ABSTRACT_TYPE(/obj/structure/stairs/urban/road_ramp_assun)
 	anchored = TRUE
 	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
 
+// these aren't 32x64 sprites because that makes it damn ugly since the light doesn't go through it to the upper part
+ABSTRACT_TYPE(/obj/structure/rampart_wall)
+	name = "rampart wall"
+	icon = 'icons/obj/structure/urban/rampart.dmi'
+	anchored = TRUE
+	density = TRUE
+	pass_flags_self = PASSWINDOW
+
+/obj/structure/rampart_wall/side
+	icon_state = "side"
+
+/obj/structure/rampart_wall/edge
+	icon_state = "edge-bottom"
+
+/obj/structure/rampart_wall/edge/top
+	icon_state = "edge-top"
+
+/obj/structure/rampart_wall/front
+	icon_state = "front-bottom-center"
+
+/obj/structure/rampart_wall/front/side
+	icon_state = "front-bottom-side"
+
+/obj/structure/rampart_wall/front/top
+	icon_state = "front-top-center"
+
+/obj/structure/rampart_wall/front/top/side
+	icon_state = "front-top-side"
+
+/obj/structure/rampart_wall/corner
+	icon_state = "corner-bottom"
+
+/obj/structure/rampart_wall/corner/top
+	icon_state = "corner-top"
+
+/obj/structure/rampart_wall/inner_corner
+	icon_state = "inner-corner-bottom"
+
+/obj/structure/rampart_wall/inner_corner/top
+	icon_state = "inner-corner-top"
+
 /obj/structure/road_barrier
 	name = "roadway barrier"
 	desc = "A set of expendable plates meant to deflect the impact of vehicles, lest they intend to go into more dangerous areas off the road."

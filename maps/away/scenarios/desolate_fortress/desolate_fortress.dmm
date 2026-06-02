@@ -69,8 +69,8 @@
 /turf/simulated/floor/exoplanet/asteroid/dirt,
 /area/desolate_fortress/exterior)
 "ci" = (
-/obj/structure/dam{
-	icon_state = "dam2"
+/obj/structure/rampart_wall/edge{
+	dir = 1
 	},
 /obj/structure/platform/ledge{
 	dir = 4
@@ -107,7 +107,7 @@
 /turf/simulated/floor/exoplanet/asteroid/dirt,
 /area/desolate_fortress/exterior)
 "eW" = (
-/obj/machinery/computer/terminal/inactive{
+/obj/structure/machinery/computer/terminal/inactive{
 	dir = 1
 	},
 /obj/effect/floor_decal/industrial/outline/yellow,
@@ -129,6 +129,11 @@
 	},
 /turf/simulated/floor/exoplanet/water/smooth/swamp,
 /area/desolate_fortress/exterior)
+"fM" = (
+/obj/structure/rampart_wall/front/top,
+/obj/structure/platform/ledge,
+/turf/simulated/floor/exoplanet/ceiling,
+/area/desolate_fortress/exterior)
 "fQ" = (
 /obj/structure/lattice/ceiling,
 /turf/simulated/floor/exoplanet/sidewalk/flat,
@@ -136,6 +141,7 @@
 "gd" = (
 /obj/structure/lattice/catwalk/indoor/urban,
 /obj/structure/railing/mapped,
+/obj/structure/filler,
 /turf/simulated/floor/exoplanet/plating,
 /area/desolate_fortress/exterior)
 "ge" = (
@@ -165,14 +171,15 @@
 /area/desolate_fortress/exterior)
 "gA" = (
 /obj/structure/girder,
+/obj/structure/grille,
 /turf/simulated/floor/exoplanet/water/smooth/swamp,
 /area/desolate_fortress/exterior)
 "gM" = (
-/obj/machinery/door/firedoor/noid{
+/obj/structure/machinery/door/firedoor/noid{
 	dir = 4
 	},
 /obj/effect/floor_decal/industrial/hatch_door/red,
-/obj/machinery/door/airlock/maintenance{
+/obj/structure/machinery/door/airlock/maintenance{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark/full,
@@ -208,19 +215,10 @@
 /turf/simulated/floor/exoplanet/plating,
 /area/desolate_fortress/exterior)
 "hp" = (
-/obj/machinery/ship_weapon/autocannon{
+/obj/structure/machinery/ship_weapon/autocannon{
 	layer = 3
 	},
 /turf/simulated/open,
-/area/desolate_fortress/exterior)
-"hA" = (
-/obj/structure/dam{
-	icon_state = "dam4"
-	},
-/obj/structure/platform/ledge{
-	dir = 4
-	},
-/turf/unsimulated/wall/composite_stone,
 /area/desolate_fortress/exterior)
 "hL" = (
 /obj/structure/platform/ledge{
@@ -314,11 +312,11 @@
 /turf/simulated/floor/exoplanet/concrete,
 /area/desolate_fortress/exterior)
 "jI" = (
-/obj/machinery/door/firedoor/noid,
+/obj/structure/machinery/door/firedoor/noid,
 /obj/effect/floor_decal/industrial/hatch_door/red{
 	dir = 1
 	},
-/obj/machinery/door/airlock/maintenance_hatch,
+/obj/structure/machinery/door/airlock/maintenance_hatch,
 /turf/simulated/floor/tiled/dark/full,
 /area/desolate_fortress/exterior)
 "jJ" = (
@@ -333,7 +331,7 @@
 /obj/structure/platform_deco/ledge{
 	dir = 4
 	},
-/obj/machinery/ship_weapon/francisca/compact{
+/obj/structure/machinery/ship_weapon/francisca/compact{
 	layer = 3;
 	pixel_x = -7;
 	pixel_y = 8
@@ -350,6 +348,11 @@
 	},
 /turf/simulated/floor/exoplanet/asphalt,
 /area/desolate_fortress/exterior)
+"kL" = (
+/obj/structure/lattice/catwalk/indoor/urban,
+/obj/structure/filler,
+/turf/simulated/floor/exoplanet/plating,
+/area/desolate_fortress/exterior)
 "kP" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/simulated/floor/exoplanet/asteroid/rock,
@@ -358,6 +361,21 @@
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/structure/table/rack,
 /turf/simulated/floor/exoplanet/sidewalk/flat,
+/area/desolate_fortress/exterior)
+"lg" = (
+/obj/structure/rampart_wall/front/side{
+	dir = 8
+	},
+/turf/simulated/floor/exoplanet/asteroid/dirt,
+/area/desolate_fortress/exterior)
+"ln" = (
+/obj/structure/rampart_wall/edge/top{
+	dir = 8
+	},
+/obj/structure/platform/ledge{
+	dir = 4
+	},
+/turf/simulated/floor/exoplanet/asteroid/dirt,
 /area/desolate_fortress/exterior)
 "lp" = (
 /obj/structure/flora/bush/jungle/b/random,
@@ -398,11 +416,9 @@
 /turf/simulated/open,
 /area/desolate_fortress/exterior)
 "mG" = (
-/obj/structure/dam{
-	icon_state = "dam9"
-	},
+/obj/structure/rampart_wall/front/top/side,
 /obj/structure/platform/ledge,
-/turf/unsimulated/wall/composite_stone,
+/turf/simulated/floor/exoplanet/ceiling,
 /area/desolate_fortress/exterior)
 "mW" = (
 /turf/simulated/floor/exoplanet/concrete,
@@ -411,20 +427,11 @@
 /obj/structure/platform/ledge/dark,
 /turf/simulated/floor/exoplanet/water/smooth/swamp,
 /area/desolate_fortress/exterior)
-"nv" = (
-/obj/structure/dam{
-	icon_state = "dam3"
+"nR" = (
+/obj/structure/rampart_wall/front/top/side{
+	dir = 8
 	},
-/obj/structure/platform/ledge{
-	dir = 4
-	},
-/obj/structure/platform/ledge{
-	dir = 1
-	},
-/obj/structure/platform_deco/ledge{
-	dir = 10
-	},
-/turf/unsimulated/wall/composite_stone,
+/turf/simulated/floor/exoplanet/asteroid/dirt,
 /area/desolate_fortress/exterior)
 "oc" = (
 /obj/structure/lattice/ceiling,
@@ -433,6 +440,18 @@
 	dir = 1
 	},
 /turf/simulated/floor/exoplanet/concrete,
+/area/desolate_fortress/exterior)
+"os" = (
+/obj/structure/lattice/catwalk/indoor/above_water,
+/obj/structure/railing/mapped{
+	dir = 4
+	},
+/turf/simulated/floor/exoplanet/water/smooth/swamp,
+/area/desolate_fortress/exterior)
+"pf" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/decal/curb/corner,
+/turf/simulated/floor/exoplanet/asteroid/dirt,
 /area/desolate_fortress/exterior)
 "pA" = (
 /obj/structure/flora/rock/pile/random,
@@ -472,9 +491,8 @@
 /turf/simulated/floor/exoplanet/concrete,
 /area/desolate_fortress/exterior)
 "qT" = (
-/obj/structure/dam{
-	icon_state = "dam8";
-	opacity = 1
+/obj/structure/rampart_wall/inner_corner/top{
+	dir = 8
 	},
 /obj/structure/platform/ledge,
 /obj/structure/platform/ledge{
@@ -483,7 +501,7 @@
 /obj/structure/platform_deco/ledge{
 	dir = 5
 	},
-/turf/unsimulated/wall/composite_stone,
+/turf/simulated/floor/exoplanet/ceiling,
 /area/desolate_fortress/exterior)
 "qU" = (
 /obj/structure/chainlink_fence{
@@ -519,13 +537,6 @@
 	},
 /turf/simulated/open,
 /area/desolate_fortress/exterior)
-"ry" = (
-/obj/structure/dam,
-/obj/structure/platform/ledge{
-	dir = 4
-	},
-/turf/simulated/floor/exoplanet/asteroid/dirt,
-/area/desolate_fortress/exterior)
 "rB" = (
 /obj/random/dirt_75,
 /obj/random/dirt_75,
@@ -537,6 +548,9 @@
 	},
 /obj/structure/railing/mapped/no_density/low{
 	dir = 4
+	},
+/obj/structure/platform_deco/ledge{
+	dir = 5
 	},
 /turf/simulated/floor/exoplanet/ceiling,
 /area/desolate_fortress/exterior)
@@ -597,13 +611,11 @@
 /turf/simulated/floor/plating,
 /area/desolate_fortress/exterior)
 "tM" = (
-/obj/structure/platform_deco/ledge{
+/obj/effect/decal/road_marking/thin,
+/obj/structure/rampart_wall/corner{
 	dir = 1
 	},
-/obj/structure/railing/mapped/no_density/low{
-	dir = 4
-	},
-/turf/simulated/floor/exoplanet/ceiling,
+/turf/simulated/floor/exoplanet/asphalt,
 /area/desolate_fortress/exterior)
 "tN" = (
 /obj/effect/decal/exterior_stairs/half/center{
@@ -613,14 +625,22 @@
 /area/desolate_fortress/exterior)
 "uf" = (
 /obj/effect/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/firedoor/noid,
+/obj/structure/machinery/door/firedoor/noid,
 /turf/simulated/floor/tiled/dark/full,
 /area/desolate_fortress/exterior)
 "up" = (
-/obj/structure/dam{
-	icon_state = "dam5"
+/obj/structure/railing/mapped/no_density/low{
+	dir = 8
 	},
-/turf/unsimulated/wall/composite_stone,
+/obj/structure/railing/mapped/no_density/low{
+	dir = 4
+	},
+/obj/structure/structural_support,
+/turf/simulated/floor/exoplanet/plating,
+/area/desolate_fortress/exterior)
+"uG" = (
+/obj/structure/filler,
+/turf/simulated/floor/exoplanet/concrete,
 /area/desolate_fortress/exterior)
 "uH" = (
 /obj/structure/platform_deco/ledge{
@@ -635,13 +655,13 @@
 /turf/simulated/floor/exoplanet/water/smooth/swamp,
 /area/desolate_fortress/exterior)
 "vc" = (
-/obj/structure/dam{
-	icon_state = "dam4"
+/obj/structure/rampart_wall/corner/top{
+	dir = 8
 	},
 /obj/structure/platform_deco/ledge{
 	dir = 4
 	},
-/turf/unsimulated/wall/composite_stone,
+/turf/simulated/floor/exoplanet/ceiling,
 /area/desolate_fortress/exterior)
 "vn" = (
 /obj/structure/utility_pole/street{
@@ -668,6 +688,12 @@
 "vI" = (
 /obj/structure/stairs/west,
 /turf/simulated/floor/exoplanet/asteroid/dirt,
+/area/desolate_fortress/exterior)
+"vJ" = (
+/obj/structure/rampart_wall/front/side{
+	dir = 8
+	},
+/turf/simulated/floor/exoplanet/ceiling,
 /area/desolate_fortress/exterior)
 "vK" = (
 /obj/structure/lattice/catwalk/indoor/urban,
@@ -708,7 +734,7 @@
 /obj/structure/platform_deco/ledge{
 	dir = 10
 	},
-/turf/simulated/floor/exoplanet/asteroid/dirt,
+/turf/simulated/floor/exoplanet/ceiling,
 /area/desolate_fortress/exterior)
 "wT" = (
 /obj/structure/railing/mapped/no_density/low{
@@ -720,8 +746,12 @@
 "wU" = (
 /turf/simulated/floor/sidewalk/dark/grid,
 /area/desolate_fortress/exterior)
+"wV" = (
+/obj/structure/window_frame/empty,
+/turf/simulated/floor/exoplanet/asteroid/dirt,
+/area/desolate_fortress/exterior)
 "xt" = (
-/obj/machinery/computer/terminal/inactive{
+/obj/structure/machinery/computer/terminal/inactive{
 	dir = 8
 	},
 /obj/effect/floor_decal/industrial/outline/yellow,
@@ -738,29 +768,22 @@
 	},
 /turf/simulated/floor/plating,
 /area/desolate_fortress/exterior)
-"yg" = (
-/obj/structure/dam{
-	icon_state = "dam2";
-	opacity = 1
-	},
-/obj/structure/platform/ledge{
-	dir = 4
-	},
-/turf/simulated/floor/exoplanet/ceiling,
+"xU" = (
+/obj/structure/lattice,
+/turf/simulated/floor/exoplanet/water/smooth/swamp,
 /area/desolate_fortress/exterior)
 "yC" = (
 /obj/structure/stairs/east,
 /turf/simulated/floor/exoplanet/asteroid/dirt,
 /area/desolate_fortress/exterior)
 "zh" = (
-/obj/structure/dam{
-	icon_state = "dam6";
-	opacity = 1
+/obj/structure/rampart_wall/inner_corner{
+	dir = 8
 	},
 /obj/structure/platform/ledge{
 	dir = 4
 	},
-/turf/unsimulated/wall/composite_stone,
+/turf/simulated/floor/exoplanet/ceiling,
 /area/desolate_fortress/exterior)
 "zp" = (
 /obj/random/dirt_75,
@@ -784,13 +807,19 @@
 /turf/simulated/floor/exoplanet/sidewalk/dark,
 /area/desolate_fortress/exterior)
 "Ab" = (
-/obj/structure/dam{
-	icon_state = "dam5"
+/obj/structure/rampart_wall/edge{
+	dir = 1
 	},
-/obj/structure/platform_deco/ledge{
+/obj/structure/platform/ledge{
 	dir = 4
 	},
-/turf/unsimulated/wall/composite_stone,
+/obj/structure/platform/ledge{
+	dir = 1
+	},
+/obj/structure/platform_deco/ledge{
+	dir = 10
+	},
+/turf/simulated/floor/exoplanet/ceiling,
 /area/desolate_fortress/exterior)
 "Bi" = (
 /obj/effect/decal/road_marking/thin{
@@ -808,18 +837,8 @@
 /turf/simulated/floor/sidewalk/dark/grid,
 /area/desolate_fortress/exterior)
 "BT" = (
-/obj/structure/dam{
-	icon_state = "dam6";
-	opacity = 1
-	},
-/obj/structure/platform/ledge,
-/obj/structure/platform/ledge{
-	dir = 4
-	},
-/obj/structure/platform_deco/ledge{
-	dir = 5
-	},
-/turf/unsimulated/wall/composite_stone,
+/obj/structure/rampart_wall/front,
+/turf/simulated/floor/exoplanet/ceiling,
 /area/desolate_fortress/exterior)
 "BW" = (
 /obj/structure/chainlink_fence{
@@ -834,11 +853,11 @@
 /turf/simulated/floor/exoplanet/asteroid/dirt,
 /area/desolate_fortress/exterior)
 "Co" = (
-/obj/machinery/door/firedoor/noid{
+/obj/structure/machinery/door/firedoor/noid{
 	dir = 4
 	},
 /obj/effect/floor_decal/industrial/hatch_door/red,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/structure/machinery/door/airlock/maintenance_hatch{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark/full,
@@ -879,11 +898,8 @@
 /turf/simulated/floor/exoplanet/water/smooth/swamp,
 /area/desolate_fortress/exterior)
 "Do" = (
-/obj/structure/dam{
-	density = 0
-	},
-/obj/structure/platform/ledge{
-	dir = 4
+/obj/structure/rampart_wall/corner{
+	dir = 1
 	},
 /turf/simulated/floor/exoplanet/ceiling,
 /area/desolate_fortress/exterior)
@@ -893,6 +909,10 @@
 	},
 /obj/random/dirt_75,
 /turf/simulated/floor/exoplanet/concrete,
+/area/desolate_fortress/exterior)
+"Du" = (
+/obj/structure/rampart_wall/front/top/side,
+/turf/simulated/floor/exoplanet/asteroid/dirt,
 /area/desolate_fortress/exterior)
 "DJ" = (
 /obj/effect/floor_decal/industrial/warning/dust/corner{
@@ -908,6 +928,10 @@
 /obj/effect/decal/cleanable/floor_damage/random_broken,
 /turf/simulated/floor/exoplanet/concrete,
 /area/desolate_fortress/exterior)
+"DW" = (
+/obj/effect/map_effect/window_spawner/full/reinforced/firedoor,
+/turf/simulated/floor/exoplanet/asteroid/dirt,
+/area/desolate_fortress/exterior)
 "Ed" = (
 /obj/structure/railing/mapped/no_density/low,
 /obj/effect/floor_decal/industrial/warning{
@@ -917,7 +941,7 @@
 /area/desolate_fortress/exterior)
 "Em" = (
 /obj/effect/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/firedoor/noid{
+/obj/structure/machinery/door/firedoor/noid{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/dark/full,
@@ -927,6 +951,10 @@
 	dir = 8
 	},
 /turf/simulated/floor/exoplanet/asteroid/rock,
+/area/desolate_fortress/exterior)
+"Ew" = (
+/obj/structure/rampart_wall/front/side,
+/turf/simulated/floor/exoplanet/ceiling,
 /area/desolate_fortress/exterior)
 "EC" = (
 /obj/random/dirt_75,
@@ -942,7 +970,7 @@
 /obj/structure/platform/ledge{
 	dir = 4
 	},
-/turf/unsimulated/wall/composite_stone,
+/turf/simulated/floor/exoplanet/ceiling,
 /area/desolate_fortress/exterior)
 "EK" = (
 /obj/structure/table/reinforced/steel,
@@ -1006,12 +1034,25 @@
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/plating,
 /area/desolate_fortress/exterior)
+"Gt" = (
+/obj/structure/window_frame,
+/turf/simulated/floor/exoplanet/asteroid/dirt,
+/area/desolate_fortress/exterior)
 "GB" = (
 /turf/unsimulated/wall/composite_stone,
 /area/desolate_fortress/exterior)
 "GL" = (
 /obj/structure/flora/rock/random,
 /turf/simulated/floor/exoplanet/asteroid/rock,
+/area/desolate_fortress/exterior)
+"GO" = (
+/obj/structure/rampart_wall/side{
+	dir = 8
+	},
+/obj/structure/platform/ledge{
+	dir = 4
+	},
+/turf/simulated/floor/exoplanet/ceiling,
 /area/desolate_fortress/exterior)
 "GS" = (
 /obj/structure/platform/ledge,
@@ -1024,17 +1065,18 @@
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/desolate_fortress/exterior)
-"Hj" = (
-/obj/structure/dam{
-	icon_state = "dam7"
-	},
-/turf/unsimulated/wall/composite_stone,
-/area/desolate_fortress/exterior)
 "Ie" = (
 /obj/structure/platform_deco/ledge/dark{
 	dir = 4
 	},
 /turf/simulated/floor/exoplanet/water/smooth/swamp,
+/area/desolate_fortress/exterior)
+"Ii" = (
+/obj/structure/rampart_wall/front/top/side{
+	dir = 8
+	},
+/obj/structure/platform/ledge,
+/turf/simulated/floor/exoplanet/ceiling,
 /area/desolate_fortress/exterior)
 "Ix" = (
 /obj/structure/flora/bush/jungle/large/random,
@@ -1105,9 +1147,13 @@
 "Mm" = (
 /turf/simulated/floor/exoplanet/asteroid/dirt/mire,
 /area/desolate_fortress/exterior)
+"Mn" = (
+/obj/structure/window_frame/unanchored,
+/turf/simulated/floor/exoplanet/asteroid/dirt,
+/area/desolate_fortress/exterior)
 "My" = (
-/obj/structure/dam{
-	icon_state = "dam2"
+/obj/structure/rampart_wall/edge{
+	dir = 1
 	},
 /obj/structure/platform/ledge{
 	dir = 4
@@ -1123,13 +1169,6 @@
 "MU" = (
 /obj/structure/girder,
 /turf/simulated/floor/exoplanet/plating,
-/area/desolate_fortress/exterior)
-"Nf" = (
-/obj/structure/dam{
-	icon_state = "dam7"
-	},
-/obj/structure/platform/ledge,
-/turf/unsimulated/wall/composite_stone,
 /area/desolate_fortress/exterior)
 "Nw" = (
 /obj/effect/decal/road_marking/crosswalk{
@@ -1171,12 +1210,10 @@
 /turf/simulated/floor/exoplanet/asteroid/dirt,
 /area/desolate_fortress/exterior)
 "Om" = (
-/obj/structure/lattice/catwalk/indoor/above_water,
-/obj/structure/railing/mapped{
-	dir = 8
+/obj/effect/decal/curb/corner{
+	dir = 1
 	},
-/obj/structure/railing/mapped,
-/turf/simulated/floor/exoplanet/water/smooth/swamp,
+/turf/simulated/floor/exoplanet/asphalt,
 /area/desolate_fortress/exterior)
 "Or" = (
 /obj/structure/utility_pole/street{
@@ -1201,6 +1238,10 @@
 	},
 /turf/simulated/open,
 /area/desolate_fortress/exterior)
+"Pa" = (
+/obj/structure/machinery/door/airlock/glass,
+/turf/simulated/floor/exoplanet/asteroid/dirt,
+/area/desolate_fortress/exterior)
 "Pl" = (
 /obj/structure/bed/sleeping_bag{
 	color = "#5C534C"
@@ -1219,11 +1260,16 @@
 /obj/effect/floor_decal/industrial/outline_door/yellow{
 	dir = 1
 	},
+/obj/structure/filler,
 /turf/simulated/floor/exoplanet/sidewalk/flat,
 /area/desolate_fortress/exterior)
 "PL" = (
 /obj/structure/flora/ausbushes/reedbush,
 /turf/simulated/floor/exoplanet/water/smooth/swamp,
+/area/desolate_fortress/exterior)
+"PN" = (
+/obj/effect/decal/curb,
+/turf/simulated/floor/exoplanet/asphalt,
 /area/desolate_fortress/exterior)
 "PO" = (
 /obj/structure/flora/ausbushes/reedbush,
@@ -1272,11 +1318,11 @@
 /turf/simulated/open,
 /area/desolate_fortress/exterior)
 "QZ" = (
-/obj/machinery/door/firedoor/noid,
+/obj/structure/machinery/door/firedoor/noid,
 /obj/effect/floor_decal/industrial/hatch_door/red{
 	dir = 1
 	},
-/obj/machinery/door/airlock/maintenance,
+/obj/structure/machinery/door/airlock/maintenance,
 /turf/simulated/floor/tiled/dark/full,
 /area/desolate_fortress/exterior)
 "Rv" = (
@@ -1404,12 +1450,7 @@
 /turf/simulated/floor/exoplanet/plating,
 /area/desolate_fortress/exterior)
 "Wd" = (
-/obj/structure/dam{
-	icon_state = "dam3"
-	},
-/obj/structure/platform/ledge{
-	dir = 4
-	},
+/obj/structure/rampart_wall/front/side,
 /turf/simulated/floor/exoplanet/asteroid/dirt,
 /area/desolate_fortress/exterior)
 "Wp" = (
@@ -1434,6 +1475,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/desolate_fortress/exterior)
+"WK" = (
+/obj/random/dirt_75,
+/obj/structure/filler,
+/turf/simulated/floor/exoplanet/concrete,
+/area/desolate_fortress/exterior)
 "Xc" = (
 /obj/effect/floor_decal/industrial/outline_door/yellow{
 	dir = 8
@@ -1451,6 +1497,15 @@
 	},
 /obj/structure/ore_box,
 /turf/simulated/floor/exoplanet/concrete,
+/area/desolate_fortress/exterior)
+"XV" = (
+/obj/structure/railing/mapped/no_density/low{
+	dir = 4
+	},
+/obj/structure/platform_deco/ledge{
+	dir = 1
+	},
+/turf/simulated/floor/exoplanet/ceiling,
 /area/desolate_fortress/exterior)
 "Yc" = (
 /obj/effect/floor_decal/industrial/outline_door/yellow,
@@ -1478,6 +1533,22 @@
 "YL" = (
 /obj/structure/flora/tree/jungle,
 /turf/simulated/floor/exoplanet/asteroid/dirt,
+/area/desolate_fortress/exterior)
+"Za" = (
+/obj/structure/lattice/catwalk/indoor/above_water,
+/obj/structure/railing/mapped{
+	dir = 1
+	},
+/turf/simulated/floor/exoplanet/water/smooth/swamp,
+/area/desolate_fortress/exterior)
+"Ze" = (
+/obj/structure/rampart_wall/edge/top{
+	dir = 8
+	},
+/obj/structure/platform/ledge{
+	dir = 4
+	},
+/turf/simulated/floor/exoplanet/ceiling,
 /area/desolate_fortress/exterior)
 "Zh" = (
 /obj/random/dirt_75,
@@ -18311,10 +18382,10 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
-mb
+mv
+Za
+qq
+mv
 mb
 mb
 mb
@@ -18568,13 +18639,13 @@ Em
 gW
 gW
 gW
+xU
+Za
+qq
+xU
 gW
-mb
-mb
-mb
 gW
-mb
-mb
+gW
 mb
 mb
 mb
@@ -18826,12 +18897,12 @@ mv
 mv
 mv
 mv
+Za
+qq
 mv
 mv
 mv
-gW
-mb
-mb
+mv
 mb
 mb
 mb
@@ -19083,12 +19154,12 @@ sF
 sF
 sF
 sF
+lB
+lB
 sF
-Om
-mv
 gW
-mb
-mb
+mv
+mv
 mb
 mb
 mb
@@ -19341,11 +19412,11 @@ lB
 lB
 lB
 lB
-qq
+lB
+lB
+kr
 mv
-gW
-mb
-mb
+mv
 mb
 mb
 mb
@@ -19598,11 +19669,11 @@ gW
 kr
 gW
 gW
-qq
+lB
+lB
+kr
 mv
-gW
-mb
-mb
+mv
 mb
 mb
 mb
@@ -19855,11 +19926,11 @@ SU
 Gq
 tF
 gW
-qq
-mv
+lB
+lB
 gW
-mb
-mb
+mv
+mv
 mb
 mb
 mb
@@ -20112,12 +20183,12 @@ Ww
 Sj
 Ed
 gW
-ru
-ru
-mb
-mb
-mb
-mb
+lB
+lB
+sF
+sF
+sF
+sF
 mb
 mb
 mb
@@ -20369,12 +20440,12 @@ ru
 ru
 ru
 uf
-ru
-ru
-mb
-mb
-mb
-mb
+lB
+lB
+os
+os
+os
+os
 mb
 mb
 mb
@@ -20626,12 +20697,12 @@ ru
 ru
 ru
 uf
-ru
-ru
-mb
-mb
-mb
-mb
+lB
+qq
+mv
+mv
+mv
+mv
 mb
 mb
 mb
@@ -20883,10 +20954,10 @@ cN
 SC
 xz
 gW
-ru
-ru
-mb
-GB
+lB
+qq
+mv
+mv
 GB
 GB
 GB
@@ -21111,12 +21182,12 @@ mb
 mb
 mb
 GB
-Wd
-Wd
-Wd
-Wd
-Wd
-Wd
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
 wD
 GB
 GB
@@ -21140,18 +21211,18 @@ SU
 Gq
 tF
 gW
+lB
 qq
-mv
 GB
 GB
 GB
-BT
-EJ
-EJ
-EJ
-EJ
-Wd
-Wd
+qT
+zh
+GO
+GO
+GO
+GO
+GO
 GB
 mb
 mb
@@ -21397,13 +21468,13 @@ gW
 kr
 gW
 gW
+lB
 qq
-mv
 GB
 qT
-hA
-Ab
-Wp
+zh
+vc
+tM
 kG
 gk
 Wp
@@ -21654,11 +21725,11 @@ vA
 mb
 mb
 mb
+lB
 qq
-mv
 GB
-mG
-Hj
+fM
+BT
 vn
 Wp
 kG
@@ -21914,8 +21985,8 @@ lB
 lB
 mb
 GB
-mG
-Hj
+fM
+BT
 GL
 mb
 vU
@@ -22171,9 +22242,9 @@ mb
 mb
 mb
 GB
-GB
-Hj
-cb
+mG
+Ew
+pf
 eC
 mb
 gk
@@ -22429,8 +22500,8 @@ mb
 mb
 GB
 GB
-GB
-gk
+up
+PN
 LD
 gk
 gk
@@ -22685,9 +22756,9 @@ mb
 mb
 mb
 GB
-GB
-Hj
-gk
+Ii
+vJ
+Om
 ji
 gk
 eC
@@ -22942,8 +23013,8 @@ mb
 mb
 mb
 GB
-mG
-Hj
+fM
+BT
 gk
 ra
 gk
@@ -23199,8 +23270,8 @@ mb
 mb
 mb
 GB
-mG
-Hj
+fM
+BT
 gk
 cb
 gk
@@ -23442,7 +23513,7 @@ mb
 mb
 mb
 mb
-mb
+GB
 GB
 GB
 gA
@@ -23456,8 +23527,8 @@ mb
 mb
 mb
 GB
-mG
-Hj
+fM
+BT
 RK
 gk
 hV
@@ -23700,8 +23771,8 @@ GB
 GB
 GB
 GB
-GB
-Nf
+mG
+Ew
 hV
 GB
 GB
@@ -23713,8 +23784,8 @@ GB
 GB
 GB
 GB
-GB
-Hj
+fM
+BT
 zS
 gk
 ji
@@ -23957,11 +24028,11 @@ GB
 GB
 qT
 zh
-hA
-Ab
+vc
+Do
 mv
-yg
-nv
+Ze
+Ab
 GB
 GB
 GB
@@ -23971,7 +24042,7 @@ GB
 GB
 GB
 mG
-Hj
+Ew
 kP
 gk
 gk
@@ -24204,31 +24275,31 @@ mb
 mb
 mb
 uH
-ry
+ln
 My
-EJ
-EJ
-EJ
-EJ
-EJ
-EJ
+GO
+GO
+GO
+GO
+GO
+GO
 vc
-up
+Do
 Uq
 UV
 gs
 UV
-tM
-Do
+XV
+Ze
 ci
-EJ
-EJ
-EJ
-EJ
-EJ
-EJ
+GO
+GO
+GO
+GO
+GO
+GO
 vc
-up
+Do
 gk
 gk
 gk
@@ -27569,9 +27640,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+GB
+GB
 mb
 mb
 mb
@@ -27826,9 +27897,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+nR
+lg
 mb
 mb
 mb
@@ -28083,9 +28154,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+Du
+Wd
 mb
 mb
 mb
@@ -28340,9 +28411,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+GB
+GB
 mb
 mb
 mb
@@ -28597,9 +28668,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+DW
+DW
 mb
 mb
 mb
@@ -28854,9 +28925,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+DW
+DW
 mb
 mb
 mb
@@ -29111,9 +29182,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+GB
+GB
 mb
 mb
 mb
@@ -29368,9 +29439,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+Pa
+Pa
 mb
 mb
 mb
@@ -29625,9 +29696,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+Pa
+Pa
 mb
 mb
 mb
@@ -29882,9 +29953,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+GB
+GB
 mb
 mb
 mb
@@ -30139,9 +30210,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+wV
+wV
 mb
 mb
 mb
@@ -30396,9 +30467,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+wV
+wV
 mb
 mb
 mb
@@ -30653,9 +30724,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+GB
+GB
 mb
 mb
 mb
@@ -30910,9 +30981,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+Gt
+Gt
 mb
 mb
 mb
@@ -31167,9 +31238,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+Gt
+Gt
 mb
 mb
 mb
@@ -31424,9 +31495,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+GB
+GB
 mb
 mb
 mb
@@ -31681,9 +31752,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+Mn
+Mn
 mb
 mb
 mb
@@ -31938,9 +32009,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+Mn
+Mn
 mb
 mb
 mb
@@ -32195,9 +32266,9 @@ mb
 mb
 mb
 mb
-mb
-mb
-mb
+GB
+GB
+GB
 mb
 mb
 mb
@@ -87192,7 +87263,7 @@ GB
 Oc
 mW
 eW
-KT
+kL
 GS
 Zu
 Zu
@@ -88476,7 +88547,7 @@ zI
 zI
 zI
 xt
-mW
+uG
 gd
 GS
 hp
@@ -88733,8 +88804,8 @@ zI
 zI
 zI
 PC
-aP
-KT
+WK
+kL
 GS
 Zu
 Zu
@@ -88990,7 +89061,7 @@ zI
 zI
 dI
 PC
-mW
+uG
 gd
 GS
 Zu
@@ -89249,7 +89320,7 @@ aP
 Xc
 ZY
 GB
-GB
+GS
 Zu
 Zu
 Zu
