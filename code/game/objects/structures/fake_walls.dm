@@ -31,6 +31,10 @@
 	add_fingerprint(user)
 	update_icon()
 
+/obj/structure/fake_wall/mechanics_hints(mob/user, distance, is_adjacent)
+	. += ..()
+	. += "You can check for the false walls by <b>Left-Click</b>ing in any action intents but help."
+
 /obj/structure/fake_wall/update_icon()
 	QUEUE_SMOOTH(src)
 
@@ -63,8 +67,9 @@
 	T.mouse_opacity = MOUSE_OPACITY_TRANSPARENT // so the turf doesn't appear in the right click menu, no power gaming allowed
 
 /obj/structure/fake_wall/attack_hand(mob/user)
-	add_fingerprint(user)
-	toggle_fake_wall(user)
+	if(user.a_intent != I_HELP)
+		add_fingerprint(user)
+		toggle_fake_wall(user)
 
 /obj/structure/fake_wall/proc/toggle_fake_wall(mob/user)
 	user.visible_message(SPAN_NOTICE("\The [user] starts feeling around and pushing on \the [src]..."), SPAN_NOTICE("You start feeling around and pushing on \the [src]..."))

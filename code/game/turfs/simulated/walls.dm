@@ -66,6 +66,7 @@
 
 /turf/simulated/wall/mechanics_hints(mob/user, distance, is_adjacent)
 	. += ..()
+	. += "You can check for the false walls by <b>Left-Click</b>ing in any action intents but help."
 	if(locate(/obj/effect/overlay/wallrot) in src)
 		. += "Wall rot fungus makes walls highly susceptible to damage- pushing on it now might make it break apart."
 		. += "It can be removed cleanly with a welding tool, or scraped off for processing with a bladed item like wirecutters."
