@@ -18,6 +18,8 @@ GLOBAL_LIST_EMPTY(whiteboard_overlay_cache)
 	var/currently_pixel_shifting = FALSE
 	/// For mapping purposes. Define this as one of the overlay icon_state's name (e.g. overlay_1).
 	var/preset_overlay
+	/// Persistence ID for identifying this specific instance.
+	var/persistent_whiteboard_id
 
 /obj/structure/whiteboard/mechanics_hints(mob/user, distance, is_adjacent)
 	. += ..()
@@ -32,6 +34,10 @@ GLOBAL_LIST_EMPTY(whiteboard_overlay_cache)
 
 /obj/structure/whiteboard/Initialize()
 	. = ..()
+	var/turf/T = get_turf(src)
+	if(is_station_level(T.z))
+		persistent_whiteboard_id = "[T.x]-[T.y]-[T.z]-[type]"
+
 	if(!length(GLOB.whiteboard_overlay_cache))
 		var/list/singleton_instances = GET_SINGLETON_SUBTYPE_MAP(overlay_choices_singleton)
 		for(var/i in singleton_instances)
